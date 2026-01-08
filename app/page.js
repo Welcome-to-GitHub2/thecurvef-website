@@ -65,7 +65,7 @@ export default function TheCurveFWebsite() {
     if (validScores === 7) {
       setTotalAps(total)
     } else {
-      setFormStatus({ type: 'error', message: 'Please enter all 7 subject scores (0-100)' })
+      setFormStatus({ type: 'error', message: 'Please enter only 6 subject scores (0-100) EXCLUDING L.O' })
       setTimeout(() => setFormStatus({ type: '', message: '' }), 3000)
     }
   }
@@ -79,30 +79,59 @@ export default function TheCurveFWebsite() {
     }
 
     const programmes = []
-    
-    // University of Pretoria
-    if (aps >= 34) programmes.push({ uni: 'UP', programme: 'BSc Computer Science', minAps: 34 })
-    if (aps >= 32) programmes.push({ uni: 'UP', programme: 'BCom Accounting', minAps: 32 })
-    if (aps >= 30) programmes.push({ uni: 'UP', programme: 'BA Law', minAps: 30 })
-    if (aps >= 28) programmes.push({ uni: 'UP', programme: 'BEd Foundation Phase', minAps: 28 })
-    
-    // University of Johannesburg
-    if (aps >= 33) programmes.push({ uni: 'UJ', programme: 'BCom Economics', minAps: 33 })
-    if (aps >= 30) programmes.push({ uni: 'UJ', programme: 'BSc Engineering', minAps: 30 })
-    if (aps >= 26) programmes.push({ uni: 'UJ', programme: 'BA Social Sciences', minAps: 26 })
-    if (aps >= 24) programmes.push({ uni: 'UJ', programme: 'Diploma in Marketing', minAps: 24 })
-    
-    // Tshwane University of Technology
-    if (aps >= 28) programmes.push({ uni: 'TUT', programme: 'BTech Information Technology', minAps: 28 })
-    if (aps >= 26) programmes.push({ uni: 'TUT', programme: 'Diploma in Civil Engineering', minAps: 26 })
-    if (aps >= 24) programmes.push({ uni: 'TUT', programme: 'Diploma in Tourism Management', minAps: 24 })
-    if (aps >= 22) programmes.push({ uni: 'TUT', programme: 'Diploma in Office Management', minAps: 22 })
-    
-    // University of Mpumalanga
-    if (aps >= 26) programmes.push({ uni: 'UMP', programme: 'BSc Agriculture', minAps: 26 })
-    if (aps >= 24) programmes.push({ uni: 'UMP', programme: 'BA Human Services', minAps: 24 })
-    if (aps >= 22) programmes.push({ uni: 'UMP', programme: 'BCom Business Management', minAps: 22 })
-    if (aps >= 20) programmes.push({ uni: 'UMP', programme: 'Certificate programmes', minAps: 20 })
+
+// University of Pretoria
+if (aps >= 34) programmes.push({
+  uni: 'UP',
+  programme: 'BSc Computer Science',
+  minAps: 34,
+  applyLink: 'https://www.up.ac.za/online-application'
+})
+
+if (aps >= 32) programmes.push({
+  uni: 'UP',
+  programme: 'BCom Accounting',
+  minAps: 32,
+  applyLink: 'https://www.up.ac.za/online-application'
+})
+
+if (aps >= 30) programmes.push({
+  uni: 'UP',
+  programme: 'BA Law',
+  minAps: 30,
+  applyLink: 'https://www.up.ac.za/online-application'
+})
+
+// University of Johannesburg
+if (aps >= 33) programmes.push({
+  uni: 'UJ',
+  programme: 'BCom Economics',
+  minAps: 33,
+  applyLink: 'https://apply.uj.ac.za'
+})
+
+if (aps >= 30) programmes.push({
+  uni: 'UJ',
+  programme: 'BSc Engineering',
+  minAps: 30,
+  applyLink: 'https://apply.uj.ac.za'
+})
+
+// TUT
+if (aps >= 28) programmes.push({
+  uni: 'TUT',
+  programme: 'BTech Information Technology',
+  minAps: 28,
+  applyLink: 'https://www.tut.ac.za/student-portal/application'
+})
+
+// UMP
+if (aps >= 26) programmes.push({
+  uni: 'UMP',
+  programme: 'BSc Agriculture',
+  minAps: 26,
+  applyLink: 'https://www.ump.ac.za/Apply'
+})
 
     setQualifyingProgrammes(programmes)
   }
