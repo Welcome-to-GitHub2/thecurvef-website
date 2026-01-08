@@ -841,55 +841,76 @@ if (aps >= 26) programmes.push({
   </CardHeader>
 
   <CardContent className="space-y-6">
-    {/* Process */}
-    <div className="p-6 bg-gradient-to-br from-[#F5B041]/20 to-[#FF6B35]/20 rounded-xl">
-      <h3 className="text-xl font-bold text-[#0F4C5C] mb-4 text-center">
+    {/* Steps */}
+    <div className="bg-gradient-to-br from-[#F5B041]/20 to-[#FF6B35]/20 p-6 rounded-xl">
+      <h3 className="font-semibold text-lg text-[#0F4C5C] mb-3">
         Follow These Easy Steps
       </h3>
 
-      <ol className="space-y-3 text-gray-700 text-sm md:text-base">
-        <li>
-          <span className="font-semibold">1.</span> Apply using the official form below
-        </li>
-        <li>
-          <span className="font-semibold">2.</span> Enter your correct exam details and phone number
-        </li>
-        <li>
-          <span className="font-semibold">3.</span> Receive your matric results via WhatsApp or SMS on results day
-        </li>
+      <ol className="list-decimal list-inside space-y-2 text-gray-700 text-sm">
+        <li>Apply using the official form below</li>
+        <li>Enter your correct exam details and phone number</li>
+        <li>Receive your matric results via WhatsApp or SMS on results day</li>
       </ol>
-    </div>
 
-    {/* Apply CTA */}
-    <div className="text-center">
-      <p className="text-sm text-gray-600 mb-3 italic">
-        *Applications are currently ongoing*
+      <p className="mt-4 font-semibold text-[#FF6B35]">
+        📌 Applications are currently ongoing
       </p>
 
       <a
         href="https://tinyurl.com/atwc7kbd"
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-block bg-[#FF6B35] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#e85c2c] transition"
+        className="inline-block mt-4 bg-[#FF6B35] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#e85c2c] transition"
       >
         Apply Here →
       </a>
     </div>
 
-    {/* Extra Info */}
-    <Card className="bg-blue-50 border-blue-200">
-      <CardContent className="pt-6">
-        <h4 className="font-semibold text-[#0F4C5C] mb-2">Important Notes:</h4>
-        <ul className="text-sm text-gray-600 space-y-2">
-          <li>• Results are released in January</li>
-          <li>• Ensure your phone number is active</li>
-          <li>• This service helps you avoid queues and delays</li>
-          <li>• Official DBE results still apply</li>
-        </ul>
-      </CardContent>
-    </Card>
+    {/* Important Notes */}
+    <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
+      <h4 className="font-semibold text-[#0F4C5C] mb-3">
+        Important Notes
+      </h4>
+
+      <ul className="text-sm text-gray-700 space-y-2">
+        <li>• Results are released in January</li>
+        <li>• Ensure your phone number is active and correct</li>
+        <li>• This service helps you avoid queues and delays</li>
+        <li>• Official DBE results still apply</li>
+      </ul>
+
+      {/* DBE Link */}
+      <div className="mt-4">
+        <p className="text-sm text-gray-700 mb-2 font-medium">
+          Check results directly from the Department of Basic Education:
+        </p>
+
+        <a
+          href="https://www.education.gov.za/MatricResults/ExamResults.aspx"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#0F4C5C] font-semibold underline hover:text-[#FF6B35]"
+        >
+          Official DBE Matric Results Portal →
+        </a>
+
+        <p className="text-xs text-gray-600 mt-2">
+          Enter your examination number to view and verify your results.
+        </p>
+      </div>
+    </div>
+
+    {/* Disclaimer */}
+    <div className="bg-gray-100 border border-gray-300 rounded-xl p-4 text-xs text-gray-600">
+      <strong>Disclaimer:</strong> The WhatsApp/SMS results service is provided
+      for convenience only. TheCurveF is not affiliated with the Department of
+      Basic Education (DBE). All matric results are official only when confirmed
+      via the DBE website or your school.
+    </div>
   </CardContent>
 </Card>
+
 
           </div>
         )}
