@@ -1,5 +1,7 @@
 'use client'
 
+import Link from "next/link";
+
 
 import Image from 'next/image';
 import { useState } from 'react'
@@ -305,15 +307,26 @@ if (aps >= 26) programmes.push({
       <nav className="bg-[#0F4C5C]/90 backdrop-blur-sm border-b border-[#F5B041]/20 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#F5B041] to-[#FF6B35] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">TC</span>
-              </div>
-              <div>
-                <h1 className="text-white font-bold text-xl">TheCurveF</h1>
-                <p className="text-[#F5B041] text-xs">Education Brought To You In Style</p>
-              </div>
-            </div>
+            <Link href="/" className="flex items-center space-x-3 hover:opacity-90 transition">
+  <div className="w-12 h-12 rounded-lg overflow-hidden bg-white">
+    <Image
+      src="/images/logo.jpg"
+      
+      width={48}
+      height={48}
+      className="object-contain"
+      priority
+    />
+  </div>
+
+  <div>
+    <h1 className="text-white font-bold text-xl">TheCurveF</h1>
+    <p className="text-[#F5B041] text-xs">
+      Education Brought To You In Style
+    </p>
+  </div>
+</Link>
+
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center space-x-1">
