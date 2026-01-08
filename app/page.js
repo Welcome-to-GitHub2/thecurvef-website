@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image';
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -244,7 +245,7 @@ export default function TheCurveFWebsite() {
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <div className="absolute inset-0 bg-gradient-to-r from-[#0F4C5C]/95 to-[#0F4C5C]/80 z-10"></div>
               <img
-                src=\"/images/hero-bg.jpg\"
+                src="/images/hero-bg.jpg"
                 alt="Students studying together"
                 className="w-full h-[600px] object-cover"
               />
