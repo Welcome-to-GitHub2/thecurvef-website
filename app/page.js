@@ -1,5 +1,7 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import Image from 'next/image';
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -132,6 +134,7 @@ if (aps >= 26) programmes.push({
   minAps: 26,
   applyLink: 'https://www.ump.ac.za/Apply'
 })
+
 
     setQualifyingProgrammes(programmes)
   }
