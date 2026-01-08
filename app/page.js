@@ -1,8 +1,5 @@
 'use client'
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
-
 
 import Image from 'next/image';
 import { useState } from 'react'
@@ -314,7 +311,7 @@ if (aps >= 26) programmes.push({
               </div>
               <div>
                 <h1 className="text-white font-bold text-xl">TheCurveF</h1>
-                <p className="text-[#F5B041] text-xs">Pty Ltd</p>
+                <p className="text-[#F5B041] text-xs">Education Brought To You In Style</p>
               </div>
             </div>
 
