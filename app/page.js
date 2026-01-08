@@ -86,21 +86,21 @@ if (aps >= 34) programmes.push({
   uni: 'UP',
   programme: 'BSc Computer Science',
   minAps: 34,
-  applyLink: 'https://www.up.ac.za/online-application'
+  url: 'https://www.up.ac.za/online-application'
 })
 
 if (aps >= 32) programmes.push({
   uni: 'UP',
   programme: 'BCom Accounting',
   minAps: 32,
-  applyLink: 'https://www.up.ac.za/online-application'
+  url: 'https://www.up.ac.za/online-application'
 })
 
 if (aps >= 30) programmes.push({
   uni: 'UP',
   programme: 'BA Law',
   minAps: 30,
-  applyLink: 'https://www.up.ac.za/online-application'
+  url: 'https://www.up.ac.za/online-application'
 })
 
 // University of Johannesburg
@@ -108,14 +108,14 @@ if (aps >= 33) programmes.push({
   uni: 'UJ',
   programme: 'BCom Economics',
   minAps: 33,
-  applyLink: 'https://apply.uj.ac.za'
+  url: 'https://apply.uj.ac.za'
 })
 
 if (aps >= 30) programmes.push({
   uni: 'UJ',
   programme: 'BSc Engineering',
   minAps: 30,
-  applyLink: 'https://apply.uj.ac.za'
+  url: 'https://apply.uj.ac.za'
 })
 
 // TUT
@@ -123,7 +123,7 @@ if (aps >= 28) programmes.push({
   uni: 'TUT',
   programme: 'BTech Information Technology',
   minAps: 28,
-  applyLink: 'https://www.tut.ac.za/student-portal/application'
+  url: 'https://www.tut.ac.za/student-portal/application'
 })
 
 // UMP
@@ -131,7 +131,7 @@ if (aps >= 26) programmes.push({
   uni: 'UMP',
   programme: 'BSc Agriculture',
   minAps: 26,
-  applyLink: 'https://www.ump.ac.za/Apply'
+  url: 'https://www.ump.ac.za/Apply'
 })
 
 
@@ -686,14 +686,35 @@ if (aps >= 26) programmes.push({
                             </CardTitle>
                           </CardHeader>
                           <CardContent>
-                            <div className="space-y-2">
-                              {uniProgrammes.map((prog, idx) => (
-                                <div key={idx} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                                  <span className="font-medium text-gray-700">{prog.programme}</span>
-                                  <Badge className="bg-[#0F4C5C] text-white">Min APS: {prog.minAps}</Badge>
-                                </div>
-                              ))}
-                            </div>
+                           <div className="space-y-4">
+  {uniProgrammes.map((prog, idx) => (
+    <div
+      key={idx}
+      className="flex items-center justify-between p-4 border rounded-lg"
+    >
+      <div>
+        <p className="font-semibold text-gray-800">
+          {prog.programme}
+        </p>
+        <p className="text-sm text-gray-500">
+          Min APS: {prog.minAps}
+        </p>
+      </div>
+
+      {prog.url && (
+        <a
+          href={prog.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-[#FF6B35] text-white px-4 py-2 rounded-md hover:bg-[#e85c2c] transition"
+        >
+          Apply
+        </a>
+      )}
+    </div>
+  ))}
+</div>
+
                           </CardContent>
                         </Card>
                       )
@@ -806,7 +827,7 @@ if (aps >= 26) programmes.push({
             <div className="text-center mb-12">
               <Award className="w-20 h-20 text-[#F5B041] mx-auto mb-4" />
               <h2 className="text-5xl font-bold text-white mb-4">Matric Results 2025</h2>
-              <p className="text-xl text-white/80">Results will be released on 8 January 2026</p>
+              <p className="text-xl text-white/80">Results will be released on 13 January 2026</p>
             </div>
 
             <Card className="bg-white/95 shadow-2xl">
@@ -822,7 +843,7 @@ if (aps >= 26) programmes.push({
                     We're working on a service to deliver your matric results directly to your phone on results day.
                   </p>
                   <p className="text-sm text-gray-500">
-                    Check back in December 2025 for more information!
+                    Check back in January 2027 for more information!
                   </p>
                 </div>
 
@@ -830,7 +851,7 @@ if (aps >= 26) programmes.push({
                   <CardContent className="pt-6">
                     <h4 className="font-semibold text-[#0F4C5C] mb-2">In the meantime:</h4>
                     <ul className="text-sm text-gray-600 space-y-2">
-                      <li>• Results will be released on 8 January 2026</li>
+                      <li>• Results will be released on 13 January 2026</li>
                       <li>• Check the DBE website: www.education.gov.za</li>
                       <li>• Results available via SMS from DBE</li>
                       <li>• Collect from your school</li>
@@ -1174,7 +1195,7 @@ if (aps >= 26) programmes.push({
                     </Card>
                     <Card>
                       <CardHeader>
-                        <CardTitle>September Matric Camp</CardTitle>
+                        <CardTitle>October/November Matric Camp</CardTitle>
                         <CardDescription>Final exam preparation</CardDescription>
                       </CardHeader>
                       <CardContent>
@@ -1197,7 +1218,7 @@ if (aps >= 26) programmes.push({
             <div className="text-center mb-12">
               <Users className="w-20 h-20 text-[#F5B041] mx-auto mb-4" />
               <h2 className="text-5xl font-bold text-white mb-4">Meet Your Tutors</h2>
-              <p className="text-xl text-white/80">Qualified, experienced, and passionate educators</p>
+              <p className="text-xl text-white/80">Proffesional, experienced, and passionate educators</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6">
