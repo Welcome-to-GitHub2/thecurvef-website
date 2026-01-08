@@ -505,7 +505,7 @@ if (aps >= 26) programmes.push({
                 <CardHeader>
                   <Award className="w-12 h-12 text-[#FF6B35] mb-2" />
                   <CardTitle>Matric Results</CardTitle>
-                  <CardDescription>Check results on 8 Jan 2026</CardDescription>
+                  <CardDescription>Check results on 13 Jan 2026</CardDescription>
                 </CardHeader>
               </Card>
             </div>
@@ -831,35 +831,66 @@ if (aps >= 26) programmes.push({
             </div>
 
             <Card className="bg-white/95 shadow-2xl">
-              <CardHeader>
-                <CardTitle className="text-2xl text-[#0F4C5C]">Coming Soon!</CardTitle>
-                <CardDescription>Sign up to receive your results via WhatsApp/SMS on 8 January 2026</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="p-8 bg-gradient-to-br from-[#F5B041]/20 to-[#FF6B35]/20 rounded-xl text-center">
-                  <Award className="w-16 h-16 text-[#FF6B35] mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-[#0F4C5C] mb-2">Results Service Coming Soon</h3>
-                  <p className="text-gray-600 mb-6">
-                    We're working on a service to deliver your matric results directly to your phone on results day.
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Check back in January 2027 for more information!
-                  </p>
-                </div>
+  <CardHeader>
+    <CardTitle className="text-2xl text-[#0F4C5C]">
+      How to Receive Your Matric Results via WhatsApp or SMS
+    </CardTitle>
+    <CardDescription>
+      A simple process to get your results delivered directly to your phone
+    </CardDescription>
+  </CardHeader>
 
-                <Card className="bg-blue-50 border-blue-200">
-                  <CardContent className="pt-6">
-                    <h4 className="font-semibold text-[#0F4C5C] mb-2">In the meantime:</h4>
-                    <ul className="text-sm text-gray-600 space-y-2">
-                      <li>• Results will be released on 13 January 2026</li>
-                      <li>• Check the DBE website: www.education.gov.za</li>
-                      <li>• Results available via SMS from DBE</li>
-                      <li>• Collect from your school</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </CardContent>
-            </Card>
+  <CardContent className="space-y-6">
+    {/* Process */}
+    <div className="p-6 bg-gradient-to-br from-[#F5B041]/20 to-[#FF6B35]/20 rounded-xl">
+      <h3 className="text-xl font-bold text-[#0F4C5C] mb-4 text-center">
+        Follow These Easy Steps
+      </h3>
+
+      <ol className="space-y-3 text-gray-700 text-sm md:text-base">
+        <li>
+          <span className="font-semibold">1.</span> Apply using the official form below
+        </li>
+        <li>
+          <span className="font-semibold">2.</span> Enter your correct exam details and phone number
+        </li>
+        <li>
+          <span className="font-semibold">3.</span> Receive your matric results via WhatsApp or SMS on results day
+        </li>
+      </ol>
+    </div>
+
+    {/* Apply CTA */}
+    <div className="text-center">
+      <p className="text-sm text-gray-600 mb-3 italic">
+        *Applications are currently ongoing*
+      </p>
+
+      <a
+        href="https://tinyurl.com/atwc7kbd"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block bg-[#FF6B35] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#e85c2c] transition"
+      >
+        Apply Here →
+      </a>
+    </div>
+
+    {/* Extra Info */}
+    <Card className="bg-blue-50 border-blue-200">
+      <CardContent className="pt-6">
+        <h4 className="font-semibold text-[#0F4C5C] mb-2">Important Notes:</h4>
+        <ul className="text-sm text-gray-600 space-y-2">
+          <li>• Results are released in January</li>
+          <li>• Ensure your phone number is active</li>
+          <li>• This service helps you avoid queues and delays</li>
+          <li>• Official DBE results still apply</li>
+        </ul>
+      </CardContent>
+    </Card>
+  </CardContent>
+</Card>
+
           </div>
         )}
 
@@ -1221,28 +1252,30 @@ if (aps >= 26) programmes.push({
               <p className="text-xl text-white/80">Proffesional, experienced, and passionate educators</p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              {[1, 2, 3].map(i => (
-                <Card key={i} className="bg-white/95 shadow-xl hover:shadow-2xl transition-all">
-                  <CardContent className="pt-6">
-                    <div className="aspect-square w-full mb-4 rounded-lg overflow-hidden">
-                      <img
-                        src="https://images.pexels.com/photos/35517842/pexels-photo-35517842.jpeg"
-                        alt="Tutor"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <h3 className="text-xl font-bold text-[#0F4C5C] mb-2">Expert Tutor {i}</h3>
-                    <p className="text-gray-600 text-sm mb-4">
-                      Specializing in Mathematics, Physical Sciences, and Life Sciences
-                    </p>
-                    <div className="p-3 bg-[#F5B041]/10 rounded-lg italic text-sm text-gray-700">
-                      "Helping students reach their full potential is my passion."
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <div className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+  {/* Background Image */}
+  <img
+    src="/images/tutors-team.jpg"   // ← replace with your actual image path
+    alt="Our Experienced Tutors"
+    className="w-full h-full object-cover"
+  />
+
+  {/* Dark Overlay */}
+  <div className="absolute inset-0 bg-black/50"></div>
+
+  {/* Text Content */}
+  <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+    <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
+      Our Experienced Tutors
+    </h2>
+
+    <p className="text-lg md:text-xl text-white/90 max-w-3xl">
+      A proven team of top-performing tutors dedicated to helping learners
+      achieve academic excellence and unlock their full potential.
+    </p>
+  </div>
+</div>
+
 
             <Card className="bg-gradient-to-r from-[#0F4C5C] to-[#1a5f71] text-white shadow-2xl">
               <CardContent className="pt-6">
@@ -1463,14 +1496,15 @@ if (aps >= 26) programmes.push({
       </main>
 
       {/* Floating WhatsApp Button */}
-      <a
-        href="https://wa.me/23058115977"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-2xl transition-all hover:scale-110 z-50"
-      >
-        <MessageCircle className="w-8 h-8" />
-      </a>
+<a
+  href="https://wa.me/23058115977"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 z-50"
+>
+  WhatsApp
+</a>
+
 
       {/* Footer */}
       <footer className="bg-[#0F4C5C]/90 border-t border-[#F5B041]/20 mt-16">
