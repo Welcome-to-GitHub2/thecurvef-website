@@ -145,13 +145,128 @@ export default function TheCurveFWebsite() {
   }
 
   const pastPapers = [
-    { year: 2025, subjects: ['Mathematics P1', 'Mathematics P2', 'Physical Sciences P1', 'Physical Sciences P2', 'Life Sciences P1', 'Life Sciences P2', 'English HL P1', 'English HL P2', 'Afrikaans HL P1'] },
-    { year: 2024, subjects: ['Mathematics P1', 'Mathematics P2', 'Physical Sciences P1', 'Physical Sciences P2', 'Life Sciences P1', 'Life Sciences P2', 'Accounting', 'Business Studies', 'Economics'] },
-    { year: 2023, subjects: ['Mathematics P1', 'Mathematics P2', 'Physical Sciences P1', 'Physical Sciences P2', 'Life Sciences P1', 'Life Sciences P2', 'Geography P1', 'History P1', 'Tourism'] },
-    { year: 2022, subjects: ['All NSC Subjects Available'] },
-    { year: 2021, subjects: ['All NSC Subjects Available'] },
-    { year: 2020, subjects: ['All NSC Subjects Available'] },
-  ]
+  {
+    year: 2025,
+    subjects: [
+      {
+        name: "Mathematics P1",
+        paper: "https://www.saexampapers.co.za/grade-12-mathematics/",
+        memo: "https://www.saexampapers.co.za/grade-12-mathematics/"
+      },
+      {
+        name: "Mathematics P2",
+        paper: "https://www.saexampapers.co.za/grade-12-mathematics/",
+        memo: "https://www.saexampapers.co.za/grade-12-mathematics/"
+      },
+      {
+        name: "Physical Sciences P1",
+        paper: "https://www.saexampapers.co.za/grade-12-physical-sciences/",
+        memo: "https://www.saexampapers.co.za/grade-12-physical-sciences/"
+      },
+      {
+        name: "Physical Sciences P2",
+        paper: "https://www.saexampapers.co.za/grade-12-physical-sciences/",
+        memo: "https://www.saexampapers.co.za/grade-12-physical-sciences/"
+      },
+      {
+        name: "Life Sciences P1",
+        paper: "https://www.saexampapers.co.za/grade-12-life-sciences/",
+        memo: "https://www.saexampapers.co.za/grade-12-life-sciences/"
+      },
+      {
+        name: "Life Sciences P2",
+        paper: "https://www.saexampapers.co.za/grade-12-life-sciences/",
+        memo: "https://www.saexampapers.co.za/grade-12-life-sciences/"
+      },
+      {
+        name: "English HL P1",
+        paper: "https://www.education.gov.za/Curriculum/NationalSeniorCertificate(NSC)Examinations/NSCPastExaminationpapers.aspx",
+        memo: "https://www.education.gov.za/Curriculum/NationalSeniorCertificate(NSC)Examinations/NSCPastExaminationpapers.aspx"
+      },
+      {
+        name: "English HL P2",
+        paper: "https://www.education.gov.za/Curriculum/NationalSeniorCertificate(NSC)Examinations/NSCPastExaminationpapers.aspx",
+        memo: "https://www.education.gov.za/Curriculum/NationalSeniorCertificate(NSC)Examinations/NSCPastExaminationpapers.aspx"
+      },
+      {
+        name: "Afrikaans HL P1",
+        paper: "https://www.education.gov.za/Curriculum/NationalSeniorCertificate(NSC)Examinations/NSCPastExaminationpapers.aspx",
+        memo: "https://www.education.gov.za/Curriculum/NationalSeniorCertificate(NSC)Examinations/NSCPastExaminationpapers.aspx"
+      }
+    ]
+  },
+
+  {
+    year: 2024,
+    subjects: [
+      {
+        name: "Mathematics P1",
+        paper: "https://wcedeportal.co.za/eresource/246696",
+        memo: "https://wcedeportal.co.za/eresource/246696"
+      },
+      {
+        name: "Accounting",
+        paper: "https://www.saexampapers.co.za/grade-12-accounting/",
+        memo: "https://www.saexampapers.co.za/grade-12-accounting/"
+      },
+      {
+        name: "Business Studies",
+        paper: "https://www.saexampapers.co.za/grade-12-business-studies/",
+        memo: "https://www.saexampapers.co.za/grade-12-business-studies/"
+      },
+      {
+        name: "Economics",
+        paper: "https://www.saexampapers.co.za/grade-12-economics/",
+        memo: "https://www.saexampapers.co.za/grade-12-economics/"
+      }
+    ]
+  },
+
+  {
+    year: 2023,
+    subjects: [
+      {
+        name: "All Subjects",
+        paper: "https://www.saexampapers.co.za/",
+        memo: "https://www.saexampapers.co.za/"
+      }
+    ]
+  },
+
+  {
+    year: 2022,
+    subjects: [
+      {
+        name: "All NSC Subjects Available",
+        paper: "https://www.saexampapers.co.za/",
+        memo: "https://www.saexampapers.co.za/"
+      }
+    ]
+  },
+
+  {
+    year: 2021,
+    subjects: [
+      {
+        name: "All NSC Subjects Available",
+        paper: "https://www.saexampapers.co.za/",
+        memo: "https://www.saexampapers.co.za/"
+      }
+    ]
+  },
+
+  {
+    year: 2020,
+    subjects: [
+      {
+        name: "All NSC Subjects Available",
+        paper: "https://www.saexampapers.co.za/",
+        memo: "https://www.saexampapers.co.za/"
+      }
+    ]
+  }
+];
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0F4C5C] via-[#0F4C5C] to-[#1a5f71]">
@@ -383,23 +498,25 @@ export default function TheCurveFWebsite() {
                   <CardContent>
                     <div className="grid md:grid-cols-3 gap-4">
                       {year.subjects.map((subject, idx) => (
-                        <div
-                          key={idx}
-                          className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all"
-                        >
-                          <span className="font-medium text-gray-700">{subject}</span>
-                          <div className="flex space-x-2">
-                            <Button size="sm" variant="outline" className="text-[#0F4C5C]">
-                              <Download className="w-4 h-4 mr-1" />
-                              Paper
-                            </Button>
-                            <Button size="sm" variant="outline" className="text-[#FF6B35]">
-                              <Download className="w-4 h-4 mr-1" />
-                              Memo
-                            </Button>
-                          </div>
-                        </div>
-                      ))}
+  <div key={idx} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+    <span className="font-medium text-gray-700">{subject.name}</span>
+
+    <div className="flex space-x-2">
+      <a href={subject.paper} target="_blank" rel="noopener noreferrer">
+        <Button size="sm" variant="outline" className="text-[#0F4C5C]">
+          Paper
+        </Button>
+      </a>
+
+      <a href={subject.memo} target="_blank" rel="noopener noreferrer">
+        <Button size="sm" variant="outline" className="text-[#FF6B35]">
+          Memo
+        </Button>
+      </a>
+    </div>
+  </div>
+))}
+
                     </div>
                   </CardContent>
                 </Card>
@@ -834,7 +951,7 @@ export default function TheCurveFWebsite() {
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2 text-white/90">
-                  <li>✓ Qualified and experienced tutors</li>
+                  <li>✓ Proffesional and experienced tutors</li>
                   <li>✓ Flexible scheduling</li>
                   <li>✓ Personalized learning approach</li>
                   <li>✓ Proven track record since 2017</li>
@@ -973,7 +1090,7 @@ export default function TheCurveFWebsite() {
               <CardContent className="space-y-6">
                 <div className="aspect-video w-full rounded-xl overflow-hidden">
                   <img
-                    src="https://images.pexels.com/photos/8199620/pexels-photo-8199620.jpeg"
+                    src="/images/cam1.jpg"
                     alt="Students in classroom"
                     className="w-full h-full object-cover"
                   />
@@ -981,12 +1098,12 @@ export default function TheCurveFWebsite() {
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <img
-                    src="https://images.pexels.com/photos/5306430/pexels-photo-5306430.jpeg"
+                    src="/images/cam2.jpg"
                     alt="Student learning"
                     className="w-full h-64 object-cover rounded-lg"
                   />
                   <img
-                    src="https://images.pexels.com/photos/7972735/pexels-photo-7972735.jpeg"
+                    src="/images/uni9.jpg"
                     alt="Graduation success"
                     className="w-full h-64 object-cover rounded-lg"
                   />
