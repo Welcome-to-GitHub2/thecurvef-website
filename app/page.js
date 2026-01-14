@@ -837,132 +837,86 @@ if (aps >= 26) programmes.push({
        <Card className="bg-white/95 shadow-2xl">
   <CardHeader>
     <CardTitle className="text-2xl text-[#0F4C5C]">
-      🎉 Congratulations Class of 2025!
+      Matric Results Are Out – What To Do Next
     </CardTitle>
     <CardDescription>
-      We’re proud of learners from KwaMhlanga (1022), KwaNdebele & Nkangala District.
-      Your hard work has paid off — now let’s guide you step by step.
+      Official guidance for Grade 12 learners in KwaMhlanga, KwaNdebele & Nkangala District
     </CardDescription>
   </CardHeader>
 
-  <CardContent className="space-y-8">
+  <CardContent className="space-y-6">
 
-    {/* STEP 1 */}
-    <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
-      <h3 className="font-semibold text-lg text-[#0F4C5C] mb-2">
-        Step 1: Understand Your Results
+    {/* What To Do Next */}
+    <div className="bg-gradient-to-br from-[#F5B041]/20 to-[#FF6B35]/20 p-6 rounded-xl">
+      <h3 className="font-semibold text-lg text-[#0F4C5C] mb-3">
+        Next Steps After Receiving Your Matric Results
       </h3>
-      <p className="text-sm text-gray-700 mb-4">
-        First, understand what your results mean and what you qualify for.
-      </p>
 
-      <div className="flex flex-wrap gap-3">
-        <a href="/aps-calculator" className="bg-[#0F4C5C] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#083842]">
-          🧮 Calculate My APS
-        </a>
-        <a href="/university-checker" className="bg-white border border-[#0F4C5C] text-[#0F4C5C] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#0F4C5C]/10">
-          🎓 Check What I Can Study
-        </a>
-      </div>
+      <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm">
+        <li>Understand your pass level (Bachelor, Diploma, Higher Certificate)</li>
+        <li>Calculate your APS score for universities & TVET colleges</li>
+        <li>Apply for late university or TVET admissions</li>
+        <li>Apply for NSFAS or check your funding status</li>
+        <li>Apply for remarking or rechecking if you are unhappy with results</li>
+        <li>Register for supplementary or May/June exams if needed</li>
+      </ul>
     </div>
 
-    {/* STEP 2 */}
-    <div className="bg-green-50 border border-green-200 rounded-xl p-6">
-      <h3 className="font-semibold text-lg text-[#0F4C5C] mb-2">
-        Step 2: Apply for Studies
-      </h3>
-      <p className="text-sm text-gray-700 mb-4">
-        If you qualify, apply immediately. Some universities and TVET colleges are still open.
-      </p>
-
-      <div className="flex flex-wrap gap-3">
-        <a href="/university-checker" className="bg-[#0F4C5C] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#083842]">
-          🎓 University Options
-        </a>
-        <a href="/tvet-colleges" className="bg-white border border-[#0F4C5C] text-[#0F4C5C] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#0F4C5C]/10">
-          🏫 TVET Colleges
-        </a>
-      </div>
-    </div>
-
-    {/* STEP 3 */}
-    <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6">
-      <h3 className="font-semibold text-lg text-[#0F4C5C] mb-2">
-        Step 3: Funding & Financial Support
-      </h3>
-      <p className="text-sm text-gray-700 mb-4">
-        Many learners qualify for funding but miss deadlines. Don’t be one of them.
-      </p>
-
-      <div className="flex flex-wrap gap-3">
-        <a
-          href="https://www.nsfas.org.za"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-[#0F4C5C] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#083842]"
-        >
-          💰 Check NSFAS Status
-        </a>
-        <a href="/bursaries" className="bg-white border border-[#0F4C5C] text-[#0F4C5C] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#0F4C5C]/10">
-          💼 Bursaries & Support
-        </a>
-      </div>
-    </div>
-
-    {/* STEP 4 */}
-    <div className="bg-red-50 border border-red-200 rounded-xl p-6">
-      <h3 className="font-semibold text-lg text-[#0F4C5C] mb-2">
-        Step 4: Not Happy With Your Results?
-      </h3>
-      <p className="text-sm text-gray-700 mb-4">
-        You still have options. Many learners improve their results every year.
-      </p>
-
-      <div className="flex flex-wrap gap-3">
-        <a href="/remarking" className="bg-white border border-[#0F4C5C] text-[#0F4C5C] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#0F4C5C]/10">
-          🔁 Remark / Recheck
-        </a>
-        <a href="/supplementary-exams" className="bg-white border border-[#0F4C5C] text-[#0F4C5C] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#0F4C5C]/10">
-          📝 Supplementary Exams
-        </a>
-      </div>
-    </div>
-
-    {/* LOCAL SUPPORT */}
-    <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-      <h4 className="font-semibold text-[#0F4C5C] mb-2">
-        Support for Nkangala, KwaNdebele & KwaMhlanga Learners
+    {/* Nkangala / KwaNdebele Section */}
+    <div className="bg-green-50 border border-green-200 rounded-xl p-5">
+      <h4 className="font-semibold text-[#0F4C5C] mb-3">
+        Nkangala District – KwaNdebele & KwaMhlanga Learners
       </h4>
-      <p className="text-sm text-gray-700">
-        TheCurveF focuses on learners from KwaMhlanga (1022), Siyabuswa, Moloto and surrounding
-        Nkangala areas — offering guidance without publishing learner names or sensitive data.
+
+      <p className="text-sm text-gray-700 mb-3">
+        TheCurveF supports matric learners from schools around KwaMhlanga (1022),
+        KwaNdebele, Siyabuswa, Moloto and surrounding Nkangala areas.
       </p>
+
+      <ul className="list-disc list-inside text-sm text-gray-700 space-y-2">
+        <li>School-level matric performance insights (no learner names published)</li>
+        <li>Guidance for learners who did not qualify for their first choice</li>
+        <li>Support with next academic pathways after matric</li>
+      </ul>
     </div>
 
-    {/* OFFICIAL DBE */}
-    <div className="bg-blue-100 border border-blue-300 rounded-xl p-6">
-      <h4 className="font-semibold text-[#0F4C5C] mb-2">
-        Official Matric Results (DBE)
+    {/* DBE Official Results */}
+    <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
+      <h4 className="font-semibold text-[#0F4C5C] mb-3">
+        Check Your Official Matric Results (DBE)
       </h4>
+
+      <p className="text-sm text-gray-700 mb-3">
+        The Department of Basic Education (DBE) is the only official source of matric
+        examination results.
+      </p>
 
       <a
         href="https://www.education.gov.za/MatricResults/ExamResults.aspx"
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-block bg-[#0F4C5C] text-white px-5 py-3 rounded-lg font-semibold hover:bg-[#083842]"
+        className="inline-block bg-[#0F4C5C] text-white px-5 py-3 rounded-lg font-semibold hover:bg-[#083842] transition"
       >
-        Official DBE Results Portal →
+        Official DBE Matric Results Portal →
       </a>
+
+      <p className="text-xs text-gray-600 mt-3">
+        Enter your examination number to view your results. If your results do not
+        appear, please contact your school or district office.
+      </p>
     </div>
 
-    {/* SECONDARY INFO */}
+    {/* Updated Disclaimer */}
     <div className="bg-gray-100 border border-gray-300 rounded-xl p-4 text-xs text-gray-600">
-      <strong>Note:</strong> WhatsApp or SMS result services are for convenience only.
-      Official matric results must always be verified via the DBE website or your school.
+      <strong>Disclaimer:</strong> TheCurveF provides educational guidance and learner
+      support services. We are not affiliated with the Department of Basic Education (DBE).
+      All matric results are official only when confirmed via the DBE website or the
+      learner’s school or examination centre.
     </div>
 
   </CardContent>
 </Card>
+
 
        
 
