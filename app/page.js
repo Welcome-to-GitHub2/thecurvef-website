@@ -1485,8 +1485,7 @@ const checkUniversities = () => {
                   🎉 Congratulations Class of 2025!
                 </CardTitle>
                 <CardDescription>
-                  We’re proud of learners from KwaMhlanga (1022), KwaNdebele & Nkangala District.
-                  Your hard work has paid off — now let’s guide you step by step.
+                 Congratulations to learners from every corner of South Africa! Your dedication and hard work have paid off — let’s take the next steps together toward your future.
                 </CardDescription>
               </CardHeader>
 
