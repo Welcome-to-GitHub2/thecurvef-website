@@ -73,72 +73,103 @@ export default function TheCurveFWebsite() {
     }
   }
 
-  const checkUniversities = () => {
-    const aps = parseInt(universityAps)
-    if (isNaN(aps) || aps < 0) {
-      setFormStatus({ type: 'error', message: 'Please enter a valid APS score' })
-      setTimeout(() => setFormStatus({ type: '', message: '' }), 3000)
-      return
-    }
-
-    const programmes = []
-
-// University of Pretoria
-if (aps >= 34) programmes.push({
-  uni: 'UP',
-  programme: 'BSc Computer Science',
-  minAps: 34,
-  url: 'https://www.up.ac.za/online-application'
-})
-
-if (aps >= 32) programmes.push({
-  uni: 'UP',
-  programme: 'BCom Accounting',
-  minAps: 32,
-  url: 'https://www.up.ac.za/online-application'
-})
-
-if (aps >= 30) programmes.push({
-  uni: 'UP',
-  programme: 'BA Law',
-  minAps: 30,
-  url: 'https://www.up.ac.za/online-application'
-})
-
-// University of Johannesburg
-if (aps >= 33) programmes.push({
-  uni: 'UJ',
-  programme: 'BCom Economics',
-  minAps: 33,
-  url: 'https://apply.uj.ac.za'
-})
-
-if (aps >= 30) programmes.push({
-  uni: 'UJ',
-  programme: 'BSc Engineering',
-  minAps: 30,
-  url: 'https://apply.uj.ac.za'
-})
-
-// TUT
-if (aps >= 28) programmes.push({
-  uni: 'TUT',
-  programme: 'BTech Information Technology',
-  minAps: 28,
-  url: 'https://www.tut.ac.za/student-portal/application'
-})
-
-// UMP
-if (aps >= 26) programmes.push({
-  uni: 'UMP',
-  programme: 'BSc Agriculture',
-  minAps: 26,
-  url: 'https://www.ump.ac.za/Apply'
-})
-
-
-    setQualifyingProgrammes(programmes)
+const checkUniversities = () => {
+  const aps = parseInt(universityAps)
+  if (isNaN(aps) || aps < 0) {
+    setFormStatus({ type: 'error', message: 'Please enter a valid APS score' })
+    setTimeout(() => setFormStatus({ type: '', message: '' }), 3000)
+    return
   }
+
+  const programmes = []
+
+  // — Top 20 Universities — (APS 20+ included)
+  
+  // University of Cape Town (UCT)
+  if (aps >= 38) programmes.push({ uni: 'UCT', programme: 'BSc Life Sciences', minAps: 38, url: 'https://www.uct.ac.za/apply' })
+  if (aps >= 36) programmes.push({ uni: 'UCT', programme: 'BA Social Sciences', minAps: 36, url: 'https://www.uct.ac.za/apply' })
+  if (aps >= 32) programmes.push({ uni: 'UCT', programme: 'Diploma in Humanities', minAps: 32, url: 'https://www.uct.ac.za/apply' })
+  if (aps >= 28) programmes.push({ uni: 'UCT', programme: 'Extended Programme – Science/Diploma', minAps: 28, url: 'https://www.uct.ac.za/apply' })
+
+  // University of the Witwatersrand (WITS)
+  if (aps >= 35) programmes.push({ uni: 'WITS', programme: 'BCom Business Science', minAps: 35, url: 'https://www.wits.ac.za/apply' })
+  if (aps >= 33) programmes.push({ uni: 'WITS', programme: 'BSc Engineering', minAps: 33, url: 'https://www.wits.ac.za/apply' })
+  if (aps >= 30) programmes.push({ uni: 'WITS', programme: 'Diploma in Humanities/Commerce', minAps: 30, url: 'https://www.wits.ac.za/apply' })
+  if (aps >= 25) programmes.push({ uni: 'WITS', programme: 'Extended Access Diploma', minAps: 25, url: 'https://www.wits.ac.za/apply' })
+
+  // University of Pretoria (UP)
+  if (aps >= 34) programmes.push({ uni: 'UP', programme: 'BSc Computer Science', minAps: 34, url: 'https://www.up.ac.za/online-application' })
+  if (aps >= 32) programmes.push({ uni: 'UP', programme: 'BCom Accounting', minAps: 32, url: 'https://www.up.ac.za/online-application' })
+  if (aps >= 30) programmes.push({ uni: 'UP', programme: 'BA Law', minAps: 30, url: 'https://www.up.ac.za/online-application' })
+  if (aps >= 25) programmes.push({ uni: 'UP', programme: 'NDip / Extended Access Programmes', minAps: 25, url: 'https://www.up.ac.za/online-application' })
+
+  // Stellenbosch University (SU)
+  if (aps >= 34) programmes.push({ uni: 'SU', programme: 'BA Humanities', minAps: 34, url: 'https://www.sun.ac.za/english/learning/Pages/Apply.aspx' })
+  if (aps >= 30) programmes.push({ uni: 'SU', programme: 'BSc Extended Programme', minAps: 30, url: 'https://www.sun.ac.za/english/learning/Pages/Apply.aspx' })
+  if (aps >= 25) programmes.push({ uni: 'SU', programme: 'NDip/Diploma Access', minAps: 25, url: 'https://www.sun.ac.za/english/learning/Pages/Apply.aspx' })
+
+  // University of Johannesburg (UJ)
+  if (aps >= 33) programmes.push({ uni: 'UJ', programme: 'BCom Economics', minAps: 33, url: 'https://apply.uj.ac.za' })
+  if (aps >= 30) programmes.push({ uni: 'UJ', programme: 'BSc Engineering', minAps: 30, url: 'https://apply.uj.ac.za' })
+  if (aps >= 25) programmes.push({ uni: 'UJ', programme: 'Diploma Programmes', minAps: 25, url: 'https://apply.uj.ac.za' })
+
+  // University of KwaZulu-Natal (UKZN)
+  if (aps >= 30) programmes.push({ uni: 'UKZN', programme: 'BSc Biological Sciences', minAps: 30, url: 'https://ukzn.ac.za/apply' })
+  if (aps >= 28) programmes.push({ uni: 'UKZN', programme: 'BA Humanities', minAps: 28, url: 'https://ukzn.ac.za/apply' })
+  if (aps >= 24) programmes.push({ uni: 'UKZN', programme: 'NDip / Diploma Access', minAps: 24, url: 'https://ukzn.ac.za/apply' })
+
+  // University of the Free State (UFS)
+  if (aps >= 28) programmes.push({ uni: 'UFS', programme: 'BCom Economics', minAps: 28, url: 'https://www.ufs.ac.za/apply' })
+  if (aps >= 25) programmes.push({ uni: 'UFS', programme: 'Diploma Access Programmes', minAps: 25, url: 'https://www.ufs.ac.za/apply' })
+
+  // Nelson Mandela University (NMU)
+  if (aps >= 27) programmes.push({ uni: 'NMU', programme: 'BA Education', minAps: 27, url: 'https://apply.mandela.ac.za' })
+  if (aps >= 23) programmes.push({ uni: 'NMU', programme: 'Diploma Access Programmes', minAps: 23, url: 'https://apply.mandela.ac.za' })
+
+  // University of Limpopo (UL)
+  if (aps >= 25) programmes.push({ uni: 'UL', programme: 'BSc Agriculture', minAps: 25, url: 'https://www.ul.ac.za/apply' })
+  if (aps >= 22) programmes.push({ uni: 'UL', programme: 'Diploma Access', minAps: 22, url: 'https://www.ul.ac.za/apply' })
+
+  // North-West University (NWU)
+  if (aps >= 27) programmes.push({ uni: 'NWU', programme: 'BCom Law', minAps: 27, url: 'https://www.nwu.ac.za/apply' })
+  if (aps >= 23) programmes.push({ uni: 'NWU', programme: 'Diploma Access Programmes', minAps: 23, url: 'https://www.nwu.ac.za/apply' })
+
+  // University of South Africa (UNISA)
+  if (aps >= 23) programmes.push({ uni: 'UNISA', programme: 'BCom Business Management', minAps: 23, url: 'https://www.unisa.ac.za/sites/corporate/default/Apply-for-admission' })
+  if (aps >= 22) programmes.push({ uni: 'UNISA', programme: 'Diploma / Extended Programme', minAps: 22, url: 'https://www.unisa.ac.za' })
+
+  // University of Zululand (UNIZULU)
+  if (aps >= 25) programmes.push({ uni: 'UNIZULU', programme: 'BA Humanities', minAps: 25, url: 'https://www.unizulu.ac.za/apply' })
+  if (aps >= 22) programmes.push({ uni: 'UNIZULU', programme: 'Diploma Access', minAps: 22, url: 'https://www.unizulu.ac.za/apply' })
+
+  // Walter Sisulu University (WSU)
+  if (aps >= 24) programmes.push({ uni: 'WSU', programme: 'BSc Health Sciences', minAps: 24, url: 'https://www.wsu.ac.za/apply' })
+  if (aps >= 20) programmes.push({ uni: 'WSU', programme: 'Diploma / Access Programmes', minAps: 20, url: 'https://www.wsu.ac.za/apply' })
+
+  // Cape Peninsula University of Technology (CPUT)
+  if (aps >= 26) programmes.push({ uni: 'CPUT', programme: 'BTech Engineering', minAps: 26, url: 'https://www.cput.ac.za/apply' })
+  if (aps >= 21) programmes.push({ uni: 'CPUT', programme: 'NDip / Diploma Access', minAps: 21, url: 'https://www.cput.ac.za/apply' })
+
+  // Vaal University of Technology (VUT)
+  if (aps >= 26) programmes.push({ uni: 'VUT', programme: 'BTech Information Technology', minAps: 26, url: 'https://www.vut.ac.za/apply' })
+  if (aps >= 20) programmes.push({ uni: 'VUT', programme: 'NDip / Diploma Access', minAps: 20, url: 'https://www.vut.ac.za/apply' })
+
+  // Central University of Technology (CUT)
+  if (aps >= 24) programmes.push({ uni: 'CUT', programme: 'BTech Applied Science', minAps: 24, url: 'https://www.cut.ac.za/apply' })
+  if (aps >= 20) programmes.push({ uni: 'CUT', programme: 'NDip / Diploma Access', minAps: 20, url: 'https://www.cut.ac.za/apply' })
+
+  // — Major TVET Colleges — (APS 15+)
+  if (aps >= 15) programmes.push({ uni: 'TVET', programme: 'All TVET NCV Courses (Business/IT/Engineering/Hospitality)', minAps: 15, url: 'https://www.tvets.co.za' })
+  if (aps >= 15) programmes.push({ uni: 'TVET', programme: 'Central Johannesburg TVET College – NCV', minAps: 15, url: 'https://www.cjc.edu.za/apply' })
+  if (aps >= 15) programmes.push({ uni: 'TVET', programme: 'Tshwane North TVET College – NCV', minAps: 15, url: 'https://www.tvetcollegesportal.co.za/tshwane-north' })
+  if (aps >= 15) programmes.push({ uni: 'TVET', programme: 'False Bay TVET College – NCV', minAps: 15, url: 'https://www.falsebaycollege.co.za/apply' })
+  if (aps >= 15) programmes.push({ uni: 'TVET', programme: 'College of Cape Town – NCV', minAps: 15, url: 'https://www.cct.edu.za/index.php/en/apply' })
+  if (aps >= 15) programmes.push({ uni: 'TVET', programme: 'Waterberg TVET College – NCV', minAps: 15, url: 'https://www.tvets.co.za' })
+
+  setQualifyingProgrammes(programmes)
+}
+
+///////////////////////////////
 
   const handleFormSubmit = async (formType) => {
     setIsSubmitting(true)
@@ -311,7 +342,8 @@ if (aps >= 26) programmes.push({
   <div className="w-12 h-12 rounded-lg overflow-hidden bg-white">
     <Image
       src="/images/logo.jpg"
-      
+       alt="TheCurveF logo"
+
       width={48}
       height={48}
       className="object-contain"
@@ -344,6 +376,7 @@ if (aps >= 26) programmes.push({
                   <span>{item.label}</span>
                 </button>
               ))}
+              
               <Select value={currentPage} onValueChange={setCurrentPage}>
                 <SelectTrigger className="w-32 bg-white/10 text-white border-[#F5B041]">
                   <SelectValue placeholder="More" />
@@ -518,7 +551,7 @@ if (aps >= 26) programmes.push({
                 <CardHeader>
                   <Award className="w-12 h-12 text-[#FF6B35] mb-2" />
                   <CardTitle>Matric Results</CardTitle>
-                  <CardDescription>Check results on 13 Jan 2026</CardDescription>
+                  <CardDescription>Check your results </CardDescription>
                 </CardHeader>
               </Card>
             </div>
@@ -683,57 +716,61 @@ if (aps >= 26) programmes.push({
                 </Button>
 
                 {qualifyingProgrammes.length > 0 && (
-                  <div className="mt-6 space-y-4">
-                    <h3 className="text-2xl font-bold text-[#0F4C5C]">You Qualify For:</h3>
-                    {['UP', 'UJ', 'TUT', 'UMP'].map(uni => {
-                      const uniProgrammes = qualifyingProgrammes.filter(p => p.uni === uni)
-                      if (uniProgrammes.length === 0) return null
-                      return (
-                        <Card key={uni} className="border-l-4 border-[#F5B041]">
-                          <CardHeader>
-                            <CardTitle className="text-xl">
-                              {uni === 'UP' && 'University of Pretoria'}
-                              {uni === 'UJ' && 'University of Johannesburg'}
-                              {uni === 'TUT' && 'Tshwane University of Technology'}
-                              {uni === 'UMP' && 'University of Mpumalanga'}
-                            </CardTitle>
-                          </CardHeader>
-                          <CardContent>
-                           <div className="space-y-4">
-  {uniProgrammes.map((prog, idx) => (
-    <div
-      key={idx}
-      className="flex items-center justify-between p-4 border rounded-lg"
-    >
-      <div>
-        <p className="font-semibold text-gray-800">
-          {prog.programme}
-        </p>
-        <p className="text-sm text-gray-500">
-          Min APS: {prog.minAps}
-        </p>
-      </div>
+  <div className="mt-6 space-y-4">
+    <h3 className="text-2xl font-bold text-[#0F4C5C]">You Qualify For:</h3>
 
-      {prog.url && (
-        <a
-          href={prog.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-[#FF6B35] text-white px-4 py-2 rounded-md hover:bg-[#e85c2c] transition"
-        >
-          Apply
-        </a>
-      )}
-    </div>
-  ))}
-</div>
+    {Array.from(new Set(qualifyingProgrammes.map(p => p.uni))).map((uni) => {
+      const uniProgrammes = qualifyingProgrammes.filter(p => p.uni === uni)
+      if (uniProgrammes.length === 0) return null
 
-                          </CardContent>
-                        </Card>
-                      )
-                    })}
-                  </div>
-                )}
+      // Map your uni code to full name
+      const uniNames = {
+        UP: 'University of Pretoria',
+        UJ: 'University of Johannesburg',
+        TUT: 'Tshwane University of Technology',
+        UMP: 'University of Mpumalanga',
+        UCT: 'University of Cape Town',
+        WITS: 'University of the Witwatersrand',
+        SU: 'Stellenbosch University',
+        UKZN: 'University of KwaZulu-Natal',
+        UFS: 'University of the Free State',
+        NMU: 'Nelson Mandela University',
+        UNISA: 'University of South Africa',
+        UNIZULU: 'University of Zululand',
+        WSU: 'Walter Sisulu University',
+        CPUT: 'Cape Peninsula University of Technology',
+        VUT: 'Vaal University of Technology',
+        CUT: 'Central University of Technology',
+        UL: 'University of Limpopo',
+        NWU: 'North-West University',
+        TVET: 'TVET Colleges'
+      }
+
+      return (
+        <Card key={uni} className="border-l-4 border-[#F5B041]">
+          <CardHeader>
+            <CardTitle className="text-xl">
+              {uniNames[uni] || uni}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {uniProgrammes.map((prog, idx) => (
+                <div key={idx} className="flex justify-between items-center p-2 border rounded bg-white/90 shadow-sm">
+                  <span>{prog.programme}</span>
+                  <a href={prog.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                    Apply
+                  </a>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )
+    })}
+  </div>
+)}
+
 
                 {qualifyingProgrammes.length === 0 && universityAps && (
                   <div className="mt-6 p-6 bg-yellow-50 border border-yellow-200 rounded-lg text-center">
@@ -1345,6 +1382,7 @@ if (aps >= 26) programmes.push({
               <p className="text-xl text-white/80">Second chances and exam reviews</p>
             </div>
 
+            
             <div className="grid md:grid-cols-2 gap-6">
               <Card className="bg-white/95 shadow-2xl">
                 <CardHeader>
@@ -1370,7 +1408,7 @@ if (aps >= 26) programmes.push({
                   </div>
                 </CardContent>
               </Card>
-
+              
               <Card className="bg-white/95 shadow-2xl">
                 <CardHeader>
                   <CardTitle className="text-2xl text-[#0F4C5C]">Supplementary Exams</CardTitle>
@@ -1438,6 +1476,126 @@ if (aps >= 26) programmes.push({
           </div>
         )}
       </main>
+{/* Matric Results */}
+        {currentPage === 'matric-results' && (
+          <div className="max-w-5xl mx-auto px-4 py-10">
+            <Card className="bg-white/95 shadow-2xl">
+              <CardHeader>
+                <CardTitle className="text-2xl text-[#0F4C5C]">
+                  🎉 Congratulations Class of 2025!
+                </CardTitle>
+                <CardDescription>
+                  We’re proud of learners from KwaMhlanga (1022), KwaNdebele & Nkangala District.
+                  Your hard work has paid off — now let’s guide you step by step.
+                </CardDescription>
+              </CardHeader>
+
+              <CardContent className="space-y-8">
+                {/* STEP 1 */}
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                  <h3 className="font-semibold text-lg text-[#0F4C5C] mb-2">
+                    Step 1: Understand Your Results
+                  </h3>
+                  <p className="text-sm text-gray-700 mb-4">
+                    First, understand what your results mean and what you qualify for.
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <button onClick={() => setCurrentPage('aps-calculator')} className="btn-primary">
+                      🧮 Calculate My APS
+                    </button>
+                    <button onClick={() => setCurrentPage('university-checker')} className="btn-outline">
+                      🎓 Check What I Can Study
+                    </button>
+                  </div>
+                </div>
+
+                {/* STEP 2 */}
+                <div className="bg-green-50 border border-green-200 rounded-xl p-6">
+                  <h3 className="font-semibold text-lg text-[#0F4C5C] mb-2">
+                    Step 2: Apply for Studies
+                  </h3>
+                  <p className="text-sm text-gray-700 mb-4">
+                    Late applications are still open at some universities and TVET colleges.
+                  </p>
+
+                  <div className="flex flex-wrap gap-3">
+                    <button onClick={() => setCurrentPage('university-checker')} className="btn-primary">
+                      🎓 University Options
+                    </button>
+                    <a href="/tvet-colleges" className="btn-outline">
+                      🏫 Apply to TVET Colleges
+                    </a>
+                  </div>
+                </div>
+
+                {/* STEP 3 */}
+                <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6">
+                  <h3 className="font-semibold text-lg text-[#0F4C5C] mb-2">
+                    Step 3: Funding & Support
+                  </h3>
+
+                  <div className="flex flex-wrap gap-3">
+                    <a
+                      href="https://www.nsfas.org.za"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-primary"
+                    >
+                      💰 Check NSFAS Status
+                    </a>
+                    <Link href="/bursaries" className="btn-outline">
+                      💼 Bursaries & Support
+                    </Link>
+                  </div>
+                </div>
+
+                {/* STEP 4 */}
+                <div className="bg-red-50 border border-red-200 rounded-xl p-6">
+                  <h3 className="font-semibold text-lg text-[#0F4C5C] mb-2">
+                    Step 4: Not Happy With Your Results?
+                  </h3>
+
+                  <div className="flex flex-wrap gap-3">
+                    <Link href="/remarking" className="btn-outline">
+                      🔁 Remark / Recheck Results
+                    </Link>
+                    <Link href="/supplementary-exams" className="btn-outline">
+                      📝 Supplementary Exams
+                    </Link>
+                  </div>
+                </div>
+
+                {/* LOCAL SUPPORT */}
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
+                  <h4 className="font-semibold text-[#0F4C5C] mb-2">
+                    Nkangala & KwaMhlanga Learners
+                  </h4>
+                  <p className="text-sm text-gray-700">
+                    Local guidance for KwaMhlanga (1022), Siyabuswa, Moloto & surrounding Nkangala areas. No learner names are published.
+                  </p>
+                </div>
+
+                {/* DBE */}
+                <div className="bg-blue-100 border border-blue-300 rounded-xl p-6">
+                  <a
+                    href="https://www.education.gov.za/MatricResults/ExamResults.aspx"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary"
+                  >
+                    Official DBE Matric Results →
+                  </a>
+                </div>
+
+                {/* DISCLAIMER */}
+                <div className="bg-gray-100 border border-gray-300 rounded-xl p-4 text-xs text-gray-600">
+                  <strong>Disclaimer:</strong> TheCurveF is not affiliated with DBE.
+                  Results are official only via DBE or schools.
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
       {/* Floating WhatsApp Button */}
 <a

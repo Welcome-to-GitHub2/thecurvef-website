@@ -139,3 +139,22 @@ code {
     @apply bg-background text-foreground;
     }
 }
+
+@layer components {
+  .btn-primary {
+    @apply bg-[#0F4C5C] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#083842] transition;
+  }
+
+  .btn-outline {
+    @apply border border-[#0F4C5C] text-[#0F4C5C] px-4 py-2 rounded-lg font-semibold hover:bg-[#0F4C5C]/10 transition;
+  }
+}
+
+
+.btn-primary {
+  @apply bg-[#0F4C5C] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#083842] transition;
+}
+
+.btn-outline {
+  @apply border border-[#0F4C5C] text-[#0F4C5C] px-4 py-2 rounded-lg font-semibold hover:bg-[#0F4C5C]/10 transition;
+}
