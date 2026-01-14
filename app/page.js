@@ -834,99 +834,91 @@ if (aps >= 26) programmes.push({
           </div>
         )}
 
-        {/* Matric Results Checker */}
-        {currentPage === 'matric-results' && (
-          <div className="max-w-2xl mx-auto space-y-8">
-            <div className="text-center mb-12">
-              <Award className="w-20 h-20 text-[#F5B041] mx-auto mb-4" />
-              <h2 className="text-5xl font-bold text-white mb-4">Matric Results 2025</h2>
-              <p className="text-xl text-white/80">Results will be released on 13 January 2026</p>
-            </div>
-
-            <Card className="bg-white/95 shadow-2xl">
+       <Card className="bg-white/95 shadow-2xl">
   <CardHeader>
     <CardTitle className="text-2xl text-[#0F4C5C]">
-      How to Receive Your Matric Results via WhatsApp or SMS
+      Matric Results Are Out – What To Do Next
     </CardTitle>
     <CardDescription>
-      A simple process to get your results delivered directly to your phone
+      Official guidance for Grade 12 learners in KwaMhlanga, KwaNdebele & Nkangala District
     </CardDescription>
   </CardHeader>
 
   <CardContent className="space-y-6">
-    {/* Steps */}
+
+    {/* What To Do Next */}
     <div className="bg-gradient-to-br from-[#F5B041]/20 to-[#FF6B35]/20 p-6 rounded-xl">
       <h3 className="font-semibold text-lg text-[#0F4C5C] mb-3">
-        Follow These Easy Steps
+        Next Steps After Receiving Your Matric Results
       </h3>
 
-      <ol className="list-decimal list-inside space-y-2 text-gray-700 text-sm">
-        <li>Apply using the official form below</li>
-        <li>Enter your correct exam details and phone number</li>
-        <li>Receive your matric results via WhatsApp or SMS on results day</li>
-      </ol>
+      <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm">
+        <li>Understand your pass level (Bachelor, Diploma, Higher Certificate)</li>
+        <li>Calculate your APS score for universities & TVET colleges</li>
+        <li>Apply for late university or TVET admissions</li>
+        <li>Apply for NSFAS or check your funding status</li>
+        <li>Apply for remarking or rechecking if you are unhappy with results</li>
+        <li>Register for supplementary or May/June exams if needed</li>
+      </ul>
+    </div>
 
-      <p className="mt-4 font-semibold text-[#FF6B35]">
-        📌 Applications are currently ongoing
+    {/* Nkangala / KwaNdebele Section */}
+    <div className="bg-green-50 border border-green-200 rounded-xl p-5">
+      <h4 className="font-semibold text-[#0F4C5C] mb-3">
+        Nkangala District – KwaNdebele & KwaMhlanga Learners
+      </h4>
+
+      <p className="text-sm text-gray-700 mb-3">
+        TheCurveF supports matric learners from schools around KwaMhlanga (1022),
+        KwaNdebele, Siyabuswa, Moloto and surrounding Nkangala areas.
+      </p>
+
+      <ul className="list-disc list-inside text-sm text-gray-700 space-y-2">
+        <li>School-level matric performance insights (no learner names published)</li>
+        <li>Guidance for learners who did not qualify for their first choice</li>
+        <li>Support with next academic pathways after matric</li>
+      </ul>
+    </div>
+
+    {/* DBE Official Results */}
+    <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
+      <h4 className="font-semibold text-[#0F4C5C] mb-3">
+        Check Your Official Matric Results (DBE)
+      </h4>
+
+      <p className="text-sm text-gray-700 mb-3">
+        The Department of Basic Education (DBE) is the only official source of matric
+        examination results.
       </p>
 
       <a
-        href="https://tinyurl.com/atwc7kbd"
+        href="https://www.education.gov.za/MatricResults/ExamResults.aspx"
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-block mt-4 bg-[#FF6B35] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#e85c2c] transition"
+        className="inline-block bg-[#0F4C5C] text-white px-5 py-3 rounded-lg font-semibold hover:bg-[#083842] transition"
       >
-        Apply Here →
+        Official DBE Matric Results Portal →
       </a>
+
+      <p className="text-xs text-gray-600 mt-3">
+        Enter your examination number to view your results. If your results do not
+        appear, please contact your school or district office.
+      </p>
     </div>
 
-    {/* Important Notes */}
-    <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
-      <h4 className="font-semibold text-[#0F4C5C] mb-3">
-        Important Notes
-      </h4>
-
-      <ul className="text-sm text-gray-700 space-y-2">
-        <li>• Results are released in January</li>
-        <li>• Ensure your phone number is active and correct</li>
-        <li>• This service helps you avoid queues and delays</li>
-        <li>• Official DBE results still apply</li>
-      </ul>
-
-      {/* DBE Link */}
-      <div className="mt-4">
-        <p className="text-sm text-gray-700 mb-2 font-medium">
-          Check results directly from the Department of Basic Education:
-        </p>
-
-        <a
-          href="https://www.education.gov.za/MatricResults/ExamResults.aspx"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#0F4C5C] font-semibold underline hover:text-[#FF6B35]"
-        >
-          Official DBE Matric Results Portal →
-        </a>
-
-        <p className="text-xs text-gray-600 mt-2">
-          Enter your examination number to view and verify your results.
-        </p>
-      </div>
-    </div>
-
-    {/* Disclaimer */}
+    {/* Updated Disclaimer */}
     <div className="bg-gray-100 border border-gray-300 rounded-xl p-4 text-xs text-gray-600">
-      <strong>Disclaimer:</strong> The WhatsApp/SMS results service is provided
-      for convenience only. TheCurveF is not affiliated with the Department of
-      Basic Education (DBE). All matric results are official only when confirmed
-      via the DBE website or your school.
+      <strong>Disclaimer:</strong> TheCurveF provides educational guidance and learner
+      support services. We are not affiliated with the Department of Basic Education (DBE).
+      All matric results are official only when confirmed via the DBE website or the
+      learner’s school or examination centre.
     </div>
+
   </CardContent>
 </Card>
 
 
-          </div>
-        )}
+       
 
         {/* Book Tutor Form */}
         {currentPage === 'book-tutor' && (
