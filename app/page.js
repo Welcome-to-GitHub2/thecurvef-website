@@ -1130,7 +1130,7 @@ const checkUniversities = () => {
                 <CardContent className="pt-6">
                   <Mail className="w-8 h-8 text-[#F5B041] mb-3" />
                   <h3 className="font-semibold text-[#0F4C5C] mb-2">Email</h3>
-                  <p className="text-gray-600">Ntashkills@gmail.com</p>
+                  <p className="text-gray-600">Info@thecurvef.co.za</p>
                 </CardContent>
               </Card>
             </div>
@@ -1622,7 +1622,7 @@ const checkUniversities = () => {
                 WhatsApp
               </a>
               <span>•</span>
-              <a href="mailto:Ntashkills@gmail.com" className="hover:text-[#F5B041]">
+              <a href="mailto:Info@thecurvef.co.za" className="hover:text-[#F5B041]">
                 Email
               </a>
             </div>
