@@ -58,7 +58,7 @@ const [registrationData, setRegistrationData] = useState({
   agreedToPopia: false,
 })
 
-
+  
   const menuItems = [
     { id: 'home', label: 'Home', icon: <School className="w-4 h-4" /> },
     { id: 'past-papers', label: 'Past Papers', icon: <FileText className="w-4 h-4" /> },
@@ -410,182 +410,173 @@ const handleFormSubmit = async (formType) => {
 
 
 
-            {/* Desktop Menu */}
-            <div className="hidden lg:flex items-center space-x-1">
-              {menuItems.slice(0, 6).map(item => (
-                <button
-                  key={item.id}
-                  onClick={() => setCurrentPage(item.id)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center space-x-2 ${
-                    currentPage === item.id
-                      ? 'bg-[#FF6B35] text-white'
-                      : 'text-white hover:bg-white/10'
-                  }`}
-                >
-                  {item.icon}
-                  <span>{item.label}</span>
-                </button>
-              ))}
-              
-              <Select value={currentPage} onValueChange={setCurrentPage}>
-                <SelectTrigger className="w-32 bg-white/10 text-white border-[#F5B041]">
-                  <SelectValue placeholder="More" />
-                </SelectTrigger>
-                <SelectContent>
-                  {menuItems.slice(6).map(item => (
-                    <SelectItem key={item.id} value={item.id}>
-                      <div className="flex items-center space-x-2">
-                        {item.icon}
-                        <span>{item.label}</span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              
-            {/* STILL NOT SURE */}  
-            
-             <button
-             onClick={() => setShowRegistration(true)}
-             className="ml-4 px-4 py-2 rounded-lg bg-[#F5B041] text-[#0F4C5C] font-semibold hover:bg-[#FFD166] transition"
-            >
-              Student Registration
-            </button>
+{/* Desktop Menu */}
+<div className="hidden lg:flex items-center space-x-1">
+  {menuItems.slice(0, 6).map(item => (
+    <button
+      key={item.id}
+      onClick={() => setCurrentPage(item.id)}
+      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center space-x-2 ${
+        currentPage === item.id
+          ? 'bg-[#FF6B35] text-white'
+          : 'text-white hover:bg-white/10'
+      }`}
+    >
+      {item.icon}
+      <span>{item.label}</span>
+    </button>
+  ))}
 
-             
-             
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-3 bg-[#FF6B35] text-white rounded-lg shadow-lg hover:bg-[#FF6B35]/90 transition-all"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+  <Select value={currentPage} onValueChange={setCurrentPage}>
+    <SelectTrigger className="w-32 bg-white/10 text-white border-[#F5B041]">
+      <SelectValue placeholder="More" />
+    </SelectTrigger>
+    <SelectContent>
+      {menuItems.slice(6).map(item => (
+        <SelectItem key={item.id} value={item.id}>
+          <div className="flex items-center space-x-2">
+            {item.icon}
+            <span>{item.label}</span>
           </div>
+        </SelectItem>
+      ))}
+    </SelectContent>
+  </Select>
 
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="lg:hidden mt-4 pb-4 space-y-2">
-              {menuItems.map(item => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    setCurrentPage(item.id)
-                    setMobileMenuOpen(false)
-                  }}
-                  className={`w-full px-4 py-3 rounded-lg text-left font-medium transition-all flex items-center space-x-3 ${
-                    currentPage === item.id
-                      ? 'bg-[#FF6B35] text-white'
-                      : 'text-white hover:bg-white/10'
-                  }`}
-                >
-                  {item.icon}
-                  <span>{item.label}</span>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      </nav>
+  <button
+    onClick={() => setShowRegistration(true)}
+    className="ml-4 px-4 py-2 rounded-lg bg-[#F5B041] text-[#0F4C5C] font-semibold hover:bg-[#FFD166] transition"
+  >
+    Student Registration
+  </button>
+</div>
 
-
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
-        {/* Home Page */}
-        {currentPage === 'home' && (
-          <div className="space-y-12">
-            {/* Hero Section with TheCurve Pattern */}
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0F4C5C]/95 to-[#0F4C5C]/80 z-10"></div>
-              <img
-                src="/images/hero-bg.jpg"
-                alt="Students studying together"
-                className="w-full h-[600px] object-cover"
-              />
-              <div className="absolute inset-0 z-20 flex items-center">
-                <div className="container mx-auto px-8">
-                  <div className="max-w-3xl">
-                    {/* CurveF Pattern Accent */}
-                    <div className="flex space-x-2 mb-6">
-                      {[0, 1, 2, 3, 4].map(i => (
-                        <div
-                          key={i}
-                          className="w-16 h-4 bg-gradient-to-r from-[#F5B041] via-[#FF6B35] to-[#F5B041] rounded-full"
-                          style={{ animationDelay: `${i * 0.1}s` }}
-                        ></div>
-                      ))}
-                    </div>
-                    <h1 className="text-6xl md:text-7xl font-bold text-white mb-6 leading-tight">
-                      Ace Your Matric.
-                      <span className="text-[#F5B041]"> Get Into University.</span>
-                    </h1>
-                    <p className="text-xl text-white/90 mb-8 leading-relaxed">
-                      Free past papers, APS calculator, expert tutoring, and university preparation for Mpumalanga & Gauteng learners.
-                    </p>
-                    <div className="flex flex-wrap gap-4">
-                      <Button
-                        size="lg"
-                        onClick={() => setCurrentPage('past-papers')}
-                        className="bg-[#FF6B35] hover:bg-[#FF6B35]/90 text-white font-semibold px-8 py-6 text-lg rounded-xl shadow-xl"
-                      >
-                        <Download className="w-5 h-5 mr-2" />
-                        Free Past Papers
-                      </Button>
-                      <Button
-                        size="lg"
-                        onClick={() => setCurrentPage('book-tutor')}
-                        className="bg-[#F5B041] hover:bg-[#F5B041]/90 text-[#0F4C5C] font-semibold px-8 py-6 text-lg rounded-xl shadow-xl"
-                      >
-                        <Users className="w-5 h-5 mr-2" />
-                        Book a Tutor
-                      </Button>
-
-                      {/*HERO NOT SURE REG */}
-                      <button
-  onClick={() => setCurrentPage('registration')}
-  className="bg-[#FF6B35] text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90"
+{/* Mobile Menu Button */}
+<button
+  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+  className="lg:hidden p-3 bg-[#FF6B35] text-white rounded-lg shadow-lg hover:bg-[#FF6B35]/90 transition-all"
 >
-  Register Now – Space Limited
+  {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
 </button>
+</div>
 
+{/* Mobile Menu */}
+{mobileMenuOpen && (
+  <div className="lg:hidden mt-4 pb-4 space-y-2">
+    {menuItems.map(item => (
+      <button
+        key={item.id}
+        onClick={() => {
+          setCurrentPage(item.id)
+          setMobileMenuOpen(false)
+        }}
+        className={`w-full px-4 py-3 rounded-lg text-left font-medium transition-all flex items-center space-x-3 ${
+          currentPage === item.id
+            ? 'bg-[#FF6B35] text-white'
+            : 'text-white hover:bg-white/10'
+        }`}
+      >
+        {item.icon}
+        <span>{item.label}</span>
+      </button>
+    ))}
+  </div>
+)}
+</div>
+</nav>
 
-                    </div>
-                  </div>
-                </div>
+{/* Main Content */}
+<main className="container mx-auto px-4 py-8">
+  {currentPage === 'home' && (
+    <div className="space-y-16">
+      {/* Hero Section */}
+      <section className="relative rounded-3xl overflow-hidden shadow-2xl pb-24 md:pb-32">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0F4C5C]/95 to-[#0F4C5C]/80 z-10" />
+
+        <img
+          src="/images/hero-bg.jpg"
+          alt="Students studying together"
+          className="w-full h-[520px] md:h-[600px] object-cover"
+        />
+
+        <div className="absolute inset-0 z-20 flex items-center">
+          <div className="container mx-auto px-6 md:px-8">
+            <div className="max-w-3xl">
+              <div className="flex space-x-2 mb-6">
+                {[0, 1, 2, 3, 4].map(i => (
+                  <div
+                    key={i}
+                    className="w-14 h-3 bg-gradient-to-r from-[#F5B041] via-[#FF6B35] to-[#F5B041] rounded-full"
+                  />
+                ))}
+              </div>
+
+              <h1 className="text-4xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                Ace Your Matric.
+                <span className="text-[#F5B041]"> Get Into University.</span>
+              </h1>
+
+              <p className="text-base md:text-xl text-white/90 mb-8 leading-relaxed">
+                Free past papers, APS calculator, expert tutoring, and university preparation for Mpumalanga & Gauteng learners.
+              </p>
+
+              <div className="flex flex-wrap gap-4">
+                <Button
+                  size="lg"
+                  onClick={() => setCurrentPage('past-papers')}
+                  className="bg-[#FF6B35] hover:bg-[#FF6B35]/90 text-white font-semibold px-6 py-5 rounded-xl shadow-xl"
+                >
+                  <Download className="w-5 h-5 mr-2" />
+                  Free Past Papers
+                </Button>
+
+                <Button
+                  size="lg"
+                  onClick={() => setCurrentPage('book-tutor')}
+                  className="bg-[#F5B041] hover:bg-[#F5B041]/90 text-[#0F4C5C] font-semibold px-6 py-5 rounded-xl shadow-xl"
+                >
+                  <Users className="w-5 h-5 mr-2" />
+                  Book a Tutor
+                </Button>
+
+                <button
+                  onClick={() => setCurrentPage('registration')}
+                  className="bg-[#FF6B35] text-white px-6 py-5 rounded-xl font-semibold shadow-xl hover:opacity-90"
+                >
+                  Register Now – Space Limited
+                </button>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Stats Section */}
-            <div className="grid md:grid-cols-3 gap-6">
-              <Card className="bg-white/95 border-none shadow-xl">
-                <CardContent className="pt-6">
-                  <div className="text-center">
-                    <div className="text-5xl font-bold text-[#FF6B35] mb-2">5000+</div>
-                    <p className="text-gray-600 font-medium">Papers Downloaded</p>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="bg-white/95 border-none shadow-xl">
-                <CardContent className="pt-6">
-                  <div className="text-center">
-                    <div className="text-5xl font-bold text-[#F5B041] mb-2">8+</div>
-                    <p className="text-gray-600 font-medium">Years of Camps</p>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="bg-white/95 border-none shadow-xl">
-                <CardContent className="pt-6">
-                  <div className="text-center">
-                    <div className="text-5xl font-bold text-[#0F4C5C] mb-2">500+</div>
-                    <p className="text-gray-600 font-medium">Students Helped</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+      {/* Stats Section */}
+      <section className="relative z-10 grid md:grid-cols-3 gap-6">
+        <Card className="bg-white/95 border-none shadow-xl">
+          <CardContent className="pt-6 text-center">
+            <div className="text-5xl font-bold text-[#FF6B35] mb-2">5000+</div>
+            <p className="text-gray-600 font-medium">Papers Downloaded</p>
+          </CardContent>
+        </Card>
 
-            {/* Quick Access Tools */}
+        <Card className="bg-white/95 border-none shadow-xl">
+          <CardContent className="pt-6 text-center">
+            <div className="text-5xl font-bold text-[#F5B041] mb-2">8+</div>
+            <p className="text-gray-600 font-medium">Years of Camps</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-white/95 border-none shadow-xl">
+          <CardContent className="pt-6 text-center">
+            <div className="text-5xl font-bold text-[#0F4C5C] mb-2">500+</div>
+            <p className="text-gray-600 font-medium">Students Helped</p>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Quick Access Tools */}
+
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               <Card
                 className="cursor-pointer hover:shadow-2xl transition-all bg-white/95 border-t-4 border-[#FF6B35]"
