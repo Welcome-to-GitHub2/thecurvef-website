@@ -4,44 +4,82 @@ import nodemailer from 'nodemailer';
 import twilio from 'twilio';
 
 /* ────────────────────────────────────────────────
-   DATABASE (SINGLETON CLIENT – VERY IMPORTANT)
+   ENV VALIDATION
 ──────────────────────────────────────────────── */
-const uri = process.env.MONGODB_URI;
+const {
+  MONGODB_URI,
+  EMAIL_HOST,
+  EMAIL_PORT,
+  EMAIL_USER,
+  EMAIL_PASS,
+  EMAIL_TO,
+  TWILIO_ACCOUNT_SID,
+  TWILIO_AUTH_TOKEN,
+  TWILIO_WHATSAPP_NUMBER,
+} = process.env;
 
-if (!uri) {
-  throw new Error('❌ MONGODB_URI is not defined');
+if (!MONGODB_URI) {
+  throw new Error('MONGODB_URI is not defined');
 }
 
-let client;
+/* ────────────────────────────────────────────────
+   DATABASE (SINGLETON)
+──────────────────────────────────────────────── */
 let clientPromise;
 
 if (!global._mongoClientPromise) {
-  client = new MongoClient(uri);
+  const client = new MongoClient(MONGODB_URI);
   global._mongoClientPromise = client.connect();
 }
 
 clientPromise = global._mongoClientPromise;
 
 /* ────────────────────────────────────────────────
-   EMAIL (GMAIL SMTP)
+   EMAIL
 ──────────────────────────────────────────────── */
 const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: Number(process.env.EMAIL_PORT),
+  host: EMAIL_HOST,
+  port: Number(EMAIL_PORT),
   secure: false,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: EMAIL_USER,
+    pass: EMAIL_PASS,
   },
 });
 
 /* ────────────────────────────────────────────────
-   TWILIO WHATSAPP
+   TWILIO
 ──────────────────────────────────────────────── */
-const twilioClient = twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN,
-);
+const twilioClient =
+  TWILIO_ACCOUNT_SID && TWILIO_AUTH_TOKEN
+    ? twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+    : null;
+
+/* ────────────────────────────────────────────────
+   HELPERS
+──────────────────────────────────────────────── */
+function formatSouthAfricanPhone(phone) {
+  if (!phone || typeof phone !== 'string') return null;
+
+  const cleaned = phone.replace(/\s+/g, '');
+
+  // 076xxxxxxx → +2776xxxxxxx
+  if (/^0\d{9}$/.test(cleaned)) {
+    return '+27' + cleaned.slice(1);
+  }
+
+  // 27xxxxxxxxx → +27xxxxxxxxx
+  if (/^27\d{9}$/.test(cleaned)) {
+    return '+' + cleaned;
+  }
+
+  // +27xxxxxxxxx
+  if (/^\+27\d{9}$/.test(cleaned)) {
+    return cleaned;
+  }
+
+  return null;
+}
 
 /* ────────────────────────────────────────────────
    POST HANDLER
@@ -51,15 +89,12 @@ export async function POST(req) {
     const data = await req.json();
     const { formType } = data;
 
-    console.log('Received form submission:', JSON.stringify(data, null, 2));
+    console.log('📥 Received form submission:', data);
 
-    // Get DB connection (reused, no reconnect storms)
     const client = await clientPromise;
     const db = client.db('thecurvef');
 
-    /* ────────────────────────────────────────────────
-       BOOK A TUTOR
-    ──────────────────────────────────────────────── */
+    /* ──────────────── BOOK A TUTOR ─────────────── */
     if (formType === 'tutor') {
       const { name, phone, grade, subjects, daysPerWeek } = data;
 
@@ -71,8 +106,8 @@ export async function POST(req) {
         !daysPerWeek?.trim()
       ) {
         return NextResponse.json(
-          { error: 'Missing required fields for tutor booking' },
-          { status: 400 },
+          { error: 'Missing required tutor fields' },
+          { status: 400 }
         );
       }
 
@@ -87,35 +122,41 @@ export async function POST(req) {
       });
 
       await transporter.sendMail({
-        from: `"TheCurveF" <${process.env.EMAIL_USER}>`,
-        to: process.env.EMAIL_TO,
-        subject: '📘 New Tutor Booking Request',
-        html: `
-          <h2>New Tutor Booking</h2>
-          <p><b>Name:</b> ${name}</p>
-          <p><b>Phone:</b> ${phone}</p>
-          <p><b>Grade:</b> ${grade}</p>
-          <p><b>Subjects:</b> ${subjects}</p>
-          <p><b>Days/Week:</b> ${daysPerWeek}</p>
-        `,
+        from: `"TheCurveF" <${EMAIL_USER}>`,
+        to: EMAIL_TO,
+        subject: '📘 New Tutor Booking',
+        html: `<p><b>${name}</b> booked a tutor.</p>`,
       });
 
-      await twilioClient.messages.create({
-        from: process.env.TWILIO_WHATSAPP_NUMBER,
-        to: `whatsapp:${phone.trim()}`,
-        contentSid: 'HXb5b62575e6e4ff6129ad7c8efe1f983e',
-        contentVariables: JSON.stringify({
-          '1': 'soon',
-          '2': '24 hours',
-        }),
-      });
+      const tutorWhatsapp = formatSouthAfricanPhone(phone);
+
+      if (twilioClient && tutorWhatsapp) {
+        try {
+          await twilioClient.messages.create({
+            from: `whatsapp:${TWILIO_WHATSAPP_NUMBER}`,
+            to: `whatsapp:${tutorWhatsapp}`,
+            body: `Hello ${name},
+
+Thank you for contacting TheCurveF.
+We have received your tutor booking request for ${grade}.
+
+Subjects: ${subjects}
+Sessions per week: ${daysPerWeek}
+
+Our team will contact you shortly.
+
+Kind regards,
+TheCurveF Team`,
+          });
+        } catch (err) {
+          console.warn('⚠️ Tutor WhatsApp failed:', err.message);
+        }
+      }
 
       return NextResponse.json({ success: true });
     }
 
-    /* ────────────────────────────────────────────────
-       STUDENT REGISTRATION
-    ──────────────────────────────────────────────── */
+    /* ───────────── STUDENT REGISTRATION ───────────── */
     if (formType === 'registration') {
       const {
         fullName,
@@ -142,8 +183,8 @@ export async function POST(req) {
         agreedToPopia !== true
       ) {
         return NextResponse.json(
-          { error: 'Missing required fields for registration' },
-          { status: 400 },
+          { error: 'Missing required registration fields' },
+          { status: 400 }
         );
       }
 
@@ -164,40 +205,49 @@ export async function POST(req) {
       });
 
       await transporter.sendMail({
-        from: `"TheCurveF" <${process.env.EMAIL_USER}>`,
-        to: process.env.EMAIL_TO,
+        from: `"TheCurveF" <${EMAIL_USER}>`,
+        to: EMAIL_TO,
         subject: '📚 New Student Registration',
-        html: `
-          <h2>New Student Registration</h2>
-          <p><b>Child:</b> ${fullName}</p>
-          <p><b>Grade:</b> ${grade}</p>
-          <p><b>School:</b> ${school}</p>
-          <p><b>Parent:</b> ${parentName} (${parentPhone})</p>
-        `,
+        html: `<p><b>${fullName}</b> registered.</p>`,
       });
 
-      await twilioClient.messages.create({
-        from: process.env.TWILIO_WHATSAPP_NUMBER,
-        to: `whatsapp:${parentPhone.trim()}`,
-        contentSid: 'HXb5b62575e6e4ff6129ad7c8efe1f983e',
-        contentVariables: JSON.stringify({
-          '1': 'shortly',
-          '2': 'shortly',
-        }),
-      });
+      const formattedPhone = formatSouthAfricanPhone(parentPhone);
+
+      if (twilioClient && formattedPhone) {
+        try {
+          await twilioClient.messages.create({
+            from: `whatsapp:${TWILIO_WHATSAPP_NUMBER}`,
+            to: `whatsapp:${formattedPhone}`,
+            body: `Hello ${parentName},
+
+Thank you for registering with TheCurveF.
+We have successfully received the student registration for ${fullName} (Grade ${grade}).
+
+Our team is currently reviewing the details and confirming payment.
+We will contact you shortly with the next steps.
+
+Kind regards,
+TheCurveF Team`,
+          });
+        } catch (err) {
+          console.warn('⚠️ Parent WhatsApp failed:', err.message);
+        }
+      } else {
+        console.warn('⚠️ WhatsApp skipped (invalid parent phone):', parentPhone);
+      }
 
       return NextResponse.json({ success: true });
     }
 
     return NextResponse.json(
       { error: 'Invalid form type' },
-      { status: 400 },
+      { status: 400 }
     );
   } catch (err) {
-    console.error('API ERROR:', err);
+    console.error('🔥 API ERROR:', err);
     return NextResponse.json(
       { error: 'Internal server error' },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
