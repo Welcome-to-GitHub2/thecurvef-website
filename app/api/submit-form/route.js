@@ -21,6 +21,9 @@ const {
 if (!MONGODB_URI) {
   throw new Error('MONGODB_URI is not defined');
 }
+if (!EMAIL_HOST || !EMAIL_PORT || !EMAIL_USER || !EMAIL_PASS || !EMAIL_TO) {
+  throw new Error('Email environment variables are not fully defined');
+}
 
 /* ────────────────────────────────────────────────
    DATABASE (SINGLETON)
@@ -205,11 +208,48 @@ TheCurveF Team`,
       });
 
       await transporter.sendMail({
-        from: `"TheCurveF" <${EMAIL_USER}>`,
-        to: EMAIL_TO,
-        subject: '📚 New Student Registration',
-        html: `<p><b>${fullName}</b> registered.</p>`,
-      });
+  from: '"TheCurveF" <info@thecurvef.co.za>',
+  to: EMAIL_TO,
+  subject: '📚 New Student Registration — Action Required',
+  html: `
+    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111;">
+      <h2 style="margin-bottom: 10px;">📚 New Student Registration</h2>
+
+      <p><strong>Submitted on:</strong> ${new Date().toLocaleString()}</p>
+
+      <hr />
+
+      <h3>Learner Information</h3>
+      <p><strong>Full Name:</strong> ${fullName}</p>
+      <p><strong>Gender:</strong> ${gender || 'Not specified'}</p>
+      <p><strong>Phone:</strong> ${phone}</p>
+      <p><strong>School:</strong> ${school}</p>
+      <p><strong>Grade:</strong> ${grade}</p>
+      <p><strong>Date of Birth:</strong> ${dob}</p>
+      <p><strong>Subjects:</strong> ${subjects || 'Not specified'}</p>
+
+      <hr />
+
+      <h3>Parent / Guardian Information</h3>
+      <p><strong>Name:</strong> ${parentName}</p>
+      <p><strong>Phone:</strong> ${parentPhone}</p>
+
+      <hr />
+
+      <h3>Payment & Consent</h3>
+      <p><strong>Payment Date:</strong> ${paymentDate || 'Not provided'}</p>
+      <p><strong>POPIA Consent:</strong> ✅ Agreed</p>
+
+      <hr />
+
+      <p style="font-size: 14px; color: #555;">
+        Status: <strong>Pending Review</strong><br />
+        This registration was submitted via <strong>TheCurveF Website</strong>.
+      </p>
+    </div>
+  `,
+});
+
 
       const formattedPhone = formatSouthAfricanPhone(parentPhone);
 
