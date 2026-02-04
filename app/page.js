@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 
-
 import Image from 'next/image';
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -18,6 +17,14 @@ import { Menu, X, Phone, Mail, Download, Calculator, School, BookOpen, MessageCi
 export default function TheCurveFWebsite() {
   const [currentPage, setCurrentPage] = useState('home')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  //const [showRegistration, setShowRegistration] = useState(false) //just added
+
+
+
+
+  
+
+
   const [apsScores, setApsScores] = useState({
     subject1: '',
     subject2: '',
@@ -33,6 +40,24 @@ export default function TheCurveFWebsite() {
   const [formData, setFormData] = useState({})
   const [formStatus, setFormStatus] = useState({ type: '', message: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+// ✅ REGISTRATION FORM STATE (ADD THIS)
+const [registrationData, setRegistrationData] = useState({
+  fullName: '',
+  gender: '',
+  phone: '',
+  school: '',
+  address: '',
+  referral: '',
+  grade: '',
+  dob: '',
+  subjects: [],
+  parentName: '',
+  parentPhone: '',
+  paymentDate: '',
+  agreedToPopia: false,
+})
+
 
   const menuItems = [
     { id: 'home', label: 'Home', icon: <School className="w-4 h-4" /> },
@@ -171,42 +196,65 @@ const checkUniversities = () => {
 
 ///////////////////////////////
 
-  const handleFormSubmit = async (formType) => {
-    setIsSubmitting(true)
-    setFormStatus({ type: '', message: '' })
 
-    try {
-      const response = await fetch('/api/submit-form', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ formType, data: formData })
-      })
 
-      const result = await response.json()
+  const [registrationSuccess, setRegistrationSuccess] = useState(false)
 
-      if (response.ok) {
-        setFormStatus({ type: 'success', message: result.message || 'Form submitted successfully! We will contact you soon.' })
-        setFormData({})
-        
-        // Open WhatsApp
-        const whatsappNum = '+23058115977'
-        let message = ''
-        if (formType === 'tutor') {
-          message = `New Tutor Booking Request:\nName: ${formData.name}\nPhone: ${formData.phone}\nGrade: ${formData.grade}\nSubjects: ${formData.subjects}\nDays/Week: ${formData.daysPerWeek}`
-        } else if (formType === 'contact') {
-          message = `New Contact Form:\nName: ${formData.name}\nPhone: ${formData.phone}\nMessage: ${formData.message}`
-        }
-        window.open(`https://wa.me/${whatsappNum.replace('+', '')}?text=${encodeURIComponent(message)}`, '_blank')
-      } else {
-        setFormStatus({ type: 'error', message: result.error || 'Failed to submit form. Please try again.' })
-      }
-    } catch (error) {
-      setFormStatus({ type: 'error', message: 'Network error. Please check your connection and try again.' })
-    } finally {
-      setIsSubmitting(false)
-      setTimeout(() => setFormStatus({ type: '', message: '' }), 5000)
-    }
+const handleFormSubmit = async (formType) => {
+  setIsSubmitting(true);
+  setFormStatus({ type: '', message: '' });
+
+  let payload;
+
+  if (formType === 'registration') {
+    payload = {
+      formType: 'registration',
+      fullName: registrationData.fullName,
+      gender: registrationData.gender,
+      phone: registrationData.phone,
+      school: registrationData.school,
+      address: registrationData.address,
+      referral: registrationData.referral,
+      grade: registrationData.grade,
+      dob: registrationData.dob,
+      subjects: registrationData.subjects.join(', '),
+      parentName: registrationData.parentName,
+      parentPhone: registrationData.parentPhone,
+      paymentDate: registrationData.paymentDate,
+      agreedToPopia: registrationData.agreedToPopia,
+    };
+  } else {
+    payload = {
+      formType,
+      ...formData,
+    };
   }
+
+  // 🔥 THIS LOG IS CRITICAL
+  console.log('🔥 FRONTEND PAYLOAD SENT:', payload);
+
+  try {
+    const response = await fetch('/api/submit-form', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || 'Submission failed');
+    }
+
+    setFormStatus({ type: 'success', message: 'Form submitted successfully' });
+    setRegistrationSuccess(true);
+  } catch (err) {
+    setFormStatus({ type: 'error', message: err.message });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   const pastPapers = [
   {
@@ -360,6 +408,8 @@ const checkUniversities = () => {
 </Link>
 
 
+
+
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center space-x-1">
               {menuItems.slice(0, 6).map(item => (
@@ -392,6 +442,18 @@ const checkUniversities = () => {
                   ))}
                 </SelectContent>
               </Select>
+              
+            {/* STILL NOT SURE */}  
+            
+             <button
+             onClick={() => setShowRegistration(true)}
+             className="ml-4 px-4 py-2 rounded-lg bg-[#F5B041] text-[#0F4C5C] font-semibold hover:bg-[#FFD166] transition"
+            >
+              Student Registration
+            </button>
+
+             
+             
             </div>
 
             {/* Mobile Menu Button */}
@@ -428,12 +490,13 @@ const checkUniversities = () => {
         </div>
       </nav>
 
+
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         {/* Home Page */}
         {currentPage === 'home' && (
           <div className="space-y-12">
-            {/* Hero Section with Ndebele Pattern */}
+            {/* Hero Section with TheCurve Pattern */}
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <div className="absolute inset-0 bg-gradient-to-r from-[#0F4C5C]/95 to-[#0F4C5C]/80 z-10"></div>
               <img
@@ -444,7 +507,7 @@ const checkUniversities = () => {
               <div className="absolute inset-0 z-20 flex items-center">
                 <div className="container mx-auto px-8">
                   <div className="max-w-3xl">
-                    {/* Ndebele Pattern Accent */}
+                    {/* CurveF Pattern Accent */}
                     <div className="flex space-x-2 mb-6">
                       {[0, 1, 2, 3, 4].map(i => (
                         <div
@@ -478,6 +541,16 @@ const checkUniversities = () => {
                         <Users className="w-5 h-5 mr-2" />
                         Book a Tutor
                       </Button>
+
+                      {/*HERO NOT SURE REG */}
+                      <button
+  onClick={() => setCurrentPage('registration')}
+  className="bg-[#FF6B35] text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90"
+>
+  Register Now – Space Limited
+</button>
+
+
                     </div>
                   </div>
                 </div>
@@ -1135,7 +1208,262 @@ const checkUniversities = () => {
               </Card>
             </div>
           </div>
+          
         )}
+
+{/* Student Registration Form */}
+{currentPage === 'registration' && (
+  <div className="max-w-2xl mx-auto space-y-8">
+
+    {/* Header */}
+    <div className="text-center mb-12">
+      <img src="/images/logo.jpg" alt="TheCurveF" className="mx-auto h-20 mb-4" />
+      <h2 className="text-4xl font-bold text-white mb-2">
+        2026 Student Registration
+      </h2>
+      <p className="text-white/80">
+        Secure your spot early — limited spaces available
+      </p>
+    </div>
+
+    <Card className="bg-white/95 shadow-2xl">
+      <CardHeader>
+        <CardTitle className="text-2xl text-[#0F4C5C]">
+          Learner Information
+        </CardTitle>
+        <CardDescription>
+          Please complete all required fields
+        </CardDescription>
+      </CardHeader>
+
+{/* ✅ REGISTRATION FORM */}
+<form
+  onSubmit={(e) => {
+    e.preventDefault();
+    handleFormSubmit('registration');
+  }}
+>
+  <CardContent className="space-y-4">
+
+    <Input
+      placeholder="Learner Full Name"
+      value={registrationData.fullName}
+      onChange={(e) =>
+        setRegistrationData({ ...registrationData, fullName: e.target.value })
+      }
+      required
+    />
+
+    <Select
+      value={registrationData.gender}
+      onValueChange={(value) =>
+        setRegistrationData({ ...registrationData, gender: value })
+      }
+      required
+    >
+      <SelectTrigger>
+        <SelectValue placeholder="Select Gender" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="Male">Male</SelectItem>
+        <SelectItem value="Female">Female</SelectItem>
+        <SelectItem value="Other">Other</SelectItem>
+        <SelectItem value="Prefer not to say">Prefer not to say</SelectItem>
+      </SelectContent>
+    </Select>
+
+    <Input
+      placeholder="Phone Number"
+      value={registrationData.phone}
+      onChange={(e) =>
+        setRegistrationData({ ...registrationData, phone: e.target.value })
+      }
+      required
+    />
+
+    <Input
+      placeholder="School Name"
+      value={registrationData.school}
+      onChange={(e) =>
+        setRegistrationData({ ...registrationData, school: e.target.value })
+      }
+      required
+    />
+
+    <Textarea
+      placeholder="Physical Address"
+      rows={2}
+      value={registrationData.address}
+      onChange={(e) =>
+        setRegistrationData({ ...registrationData, address: e.target.value })
+      }
+    />
+
+    <Input
+      placeholder="Where did you hear about us?"
+      value={registrationData.referral}
+      onChange={(e) =>
+        setRegistrationData({ ...registrationData, referral: e.target.value })
+      }
+    />
+
+    <Select
+      value={registrationData.grade}
+      onValueChange={(value) =>
+        setRegistrationData({ ...registrationData, grade: value })
+      }
+      required
+    >
+      <SelectTrigger>
+        <SelectValue placeholder="Select Grade" />
+      </SelectTrigger>
+      <SelectContent>
+        {[8, 9, 10, 11, 12].map((g) => (
+          <SelectItem key={g} value={`Grade ${g}`}>
+            Grade {g}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+
+    <div>
+      <Label>Learner Date of Birth</Label>
+      <Input
+        type="date"
+        value={registrationData.dob}
+        onChange={(e) =>
+          setRegistrationData({ ...registrationData, dob: e.target.value })
+        }
+        required
+      />
+    </div>
+
+    {/* Subjects */}
+    <div>
+      <p className="font-medium text-gray-700 mb-2">Subjects</p>
+      <div className="grid grid-cols-2 gap-2 text-sm">
+        {[
+          'Mathematics',
+          'Mathematical Literacy',
+          'Physical Sciences',
+          'Geography',
+          'Life Sciences',
+          'History',
+          'Natural Sciences / Technology',
+          'Tourism',
+          'Agriculture',
+          'Economics',
+          'Business Studies',
+          'Accounting',
+          'Social Sciences',
+          'EMS',
+        ].map((subject) => (
+          <label key={subject} className="flex gap-2">
+            <input
+              type="checkbox"
+              checked={registrationData.subjects.includes(subject)}
+              onChange={(e) => {
+                const checked = e.target.checked;
+                setRegistrationData((prev) => ({
+                  ...prev,
+                  subjects: checked
+                    ? [...prev.subjects, subject]
+                    : prev.subjects.filter((s) => s !== subject),
+                }));
+              }}
+            />
+            {subject}
+          </label>
+        ))}
+      </div>
+    </div>
+
+    {/* Parent Info */}
+    <div className="pt-4 border-t">
+      <h3 className="font-semibold text-[#0F4C5C] mb-2">
+        Parent’s Information
+      </h3>
+
+      <Input
+        placeholder="Parent Full Name"
+        value={registrationData.parentName}
+        onChange={(e) =>
+          setRegistrationData({
+            ...registrationData,
+            parentName: e.target.value,
+          })
+        }
+        required
+      />
+
+      <Input
+        placeholder="Parent Phone Number"
+        value={registrationData.parentPhone}
+        onChange={(e) =>
+          setRegistrationData({
+            ...registrationData,
+            parentPhone: e.target.value,
+          })
+        }
+        required
+      />
+
+      <div>
+        <Label>Payment Date</Label>
+        <Input
+          type="date"
+          value={registrationData.paymentDate}
+          onChange={(e) =>
+            setRegistrationData({
+              ...registrationData,
+              paymentDate: e.target.value,
+            })
+          }
+        />
+      </div>
+    </div>
+
+    {/* POPIA */}
+    <label className="flex gap-2 text-sm text-gray-600">
+      <input
+        type="checkbox"
+        checked={registrationData.agreedToPopia}
+        onChange={(e) =>
+          setRegistrationData({
+            ...registrationData,
+            agreedToPopia: e.target.checked,
+          })
+        }
+        required
+      />
+      I consent to my information being processed in accordance with POPIA.
+    </label>
+
+    <Button
+      type="submit"
+      disabled={isSubmitting}
+      className="w-full bg-[#FF6B35] text-white py-6 text-lg font-semibold rounded-xl"
+    >
+      {registrationSuccess ? 'Successfully submitted ✅' : 'Submit Registration'}
+    </Button>
+
+    {formStatus.message && (
+      <p
+        className={`text-sm ${
+          formStatus.type === 'success'
+            ? 'text-green-600'
+            : 'text-red-600'
+        }`}
+      >
+        {formStatus.message}
+      </p>
+    )}
+  </CardContent>
+</form>
+
+    </Card>
+  </div>
+)}
 
         {/* Camps Gallery */}
         {currentPage === 'camps' && (
