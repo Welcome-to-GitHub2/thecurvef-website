@@ -1,21 +1,5 @@
 import { NextResponse } from 'next/server'
-import { MongoClient } from 'mongodb'
-
-const uri = process.env.MONGODB_URI
-
-if (!uri) {
-  throw new Error('MONGODB_URI is not defined')
-}
-
-// Reuse Mongo client
-let clientPromise
-
-if (!global._mongoClientPromise) {
-  const client = new MongoClient(uri)
-  global._mongoClientPromise = client.connect()
-}
-
-clientPromise = global._mongoClientPromise
+import clientPromise from '@/lib/mongodb'
 
 export async function GET() {
   try {
@@ -27,9 +11,6 @@ export async function GET() {
       .find({})
       .sort({ createdAt: -1 })
       .toArray()
-
-    // 👇 TEMPORARY DEBUG (REMOVE AFTER)
-    console.log('SAMPLE REGISTRATION:', registrations[0])
 
     return NextResponse.json(registrations)
   } catch (error) {
