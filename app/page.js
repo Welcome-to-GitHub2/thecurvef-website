@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import Image from 'next/image';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -14,11 +14,50 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { Menu, X, Phone, Mail, Download, Calculator, School, BookOpen, MessageCircle, Users, Award, FileText, CheckCircle, AlertCircle } from 'lucide-react'
 
-export default function TheCurveFWebsite() {
-  const [currentPage, setCurrentPage] = useState('home')
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  //const [showRegistration, setShowRegistration] = useState(false) //just added
 
+
+export default function TheCurveFWebsite() {
+  
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [currentPage, setCurrentPage] = useState('home')
+
+
+
+  const [showRegistration, setShowRegistration] = useState(false)
+  const [showTutor, setShowTutor] = useState(false)
+
+ 
+
+  // ==============================
+// Tutor booking form state
+// ==============================
+const [tutorData, setTutorData] = useState({
+  name: '',
+  phone: '',
+  grade: '',
+  subjects: '',
+  daysPerWeek: '',
+})
+
+const [tutorStatus, setTutorStatus] = useState({
+  type: '',
+  message: '',
+})
+
+// ==============================
+// Contact form state
+// ==============================
+const [contactData, setContactData] = useState({
+  name: '',
+  phone: '',
+  message: '',
+})
+
+const [contactStatus, setContactStatus] = useState({
+  type: '',
+  message: '',
+})
 
 
 
@@ -38,7 +77,11 @@ export default function TheCurveFWebsite() {
   const [universityAps, setUniversityAps] = useState('')
   const [qualifyingProgrammes, setQualifyingProgrammes] = useState([])
   const [formData, setFormData] = useState({})
-  const [formStatus, setFormStatus] = useState({ type: '', message: '' })
+  const [registrationStatus, setRegistrationStatus] = useState({ type: '', message: '' });
+ 
+  
+  
+
   const [isSubmitting, setIsSubmitting] = useState(false)
 
 // ✅ REGISTRATION FORM STATE (ADD THIS)
@@ -61,13 +104,14 @@ const [registrationData, setRegistrationData] = useState({
   
   const menuItems = [
     { id: 'home', label: 'Home', icon: <School className="w-4 h-4" /> },
+    { id: 'registration', label: 'Register Now', icon: <Users className="w-4 h-4" /> },
     { id: 'past-papers', label: 'Past Papers', icon: <FileText className="w-4 h-4" /> },
     { id: 'aps-calculator', label: 'APS Calculator', icon: <Calculator className="w-4 h-4" /> },
     { id: 'university-checker', label: 'University Checker', icon: <School className="w-4 h-4" /> },
     { id: 'nbt-practice', label: 'NBT Practice', icon: <BookOpen className="w-4 h-4" /> },
     { id: 'matric-results', label: 'Matric Results', icon: <Award className="w-4 h-4" /> },
-    { id: 'book-tutor', label: 'Book Tutor', icon: <Users className="w-4 h-4" /> },
-    { id: 'contact', label: 'Contact', icon: <Mail className="w-4 h-4" /> },
+    { id: 'tutor', label: 'Book Tutor', icon: <Users className="w-4 h-4" /> },
+    { id: 'contact', label: 'Contact Us', icon: <Mail className="w-4 h-4" /> },
     { id: 'camps', label: 'Camps', icon: <Users className="w-4 h-4" /> },
     { id: 'tutors', label: 'Tutors', icon: <Users className="w-4 h-4" /> },
     { id: 'nsfas', label: 'NSFAS & Bursaries', icon: <Award className="w-4 h-4" /> },
@@ -199,13 +243,27 @@ const checkUniversities = () => {
 
 
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
-
+ 
+  
 const handleFormSubmit = async (formType) => {
-  setIsSubmitting(true);
-  setFormStatus({ type: '', message: '' });
+  setIsSubmitting(true)
 
-  let payload;
+  // Reset only the relevant status (never globally)
+  if (formType === 'registration') {
+    setRegistrationStatus({ type: '', message: '' })
+  }
+  if (formType === 'tutor') {
+    setTutorStatus({ type: '', message: '' })
+  }
+  if (formType === 'contact') {
+    setContactStatus({ type: '', message: '' })
+  }
 
+  let payload
+
+  // ==============================
+  // Registration (unchanged)
+  // ==============================
   if (formType === 'registration') {
     payload = {
       formType: 'registration',
@@ -222,38 +280,82 @@ const handleFormSubmit = async (formType) => {
       parentPhone: registrationData.parentPhone,
       paymentDate: registrationData.paymentDate,
       agreedToPopia: registrationData.agreedToPopia,
-    };
-  } else {
-    payload = {
-      formType,
-      ...formData,
-    };
+    }
   }
 
-  // 🔥 THIS LOG IS CRITICAL
-  console.log('🔥 FRONTEND PAYLOAD SENT:', payload);
+  // ==============================
+  // Tutor booking
+  // ==============================
+  if (formType === 'tutor') {
+    payload = {
+      formType: 'tutor',
+      ...tutorData,
+    }
+  }
+
+  // ==============================
+  // Contact form
+  // ==============================
+  if (formType === 'contact') {
+    payload = {
+      formType: 'contact',
+      ...contactData,
+    }
+  }
+
+  console.log('🔥 FRONTEND PAYLOAD SENT:', payload)
 
   try {
     const response = await fetch('/api/submit-form', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
-    });
+    })
 
-    const result = await response.json();
+    const result = await response.json()
+    if (!response.ok) throw new Error(result.error || 'Submission failed')
 
-    if (!response.ok) {
-      throw new Error(result.error || 'Submission failed');
+    // Success handling (scoped per form)
+    if (formType === 'registration') {
+      setRegistrationStatus({ type: 'success', message: 'Form submitted successfully' })
+      setRegistrationSuccess(true)
     }
 
-    setFormStatus({ type: 'success', message: 'Form submitted successfully' });
-    setRegistrationSuccess(true);
+    if (formType === 'tutor') {
+      setTutorStatus({ type: 'success', message: 'Tutor request submitted successfully' })
+      setTutorData({
+        name: '',
+        phone: '',
+        grade: '',
+        subjects: '',
+        daysPerWeek: '',
+      })
+    }
+
+    if (formType === 'contact') {
+      setContactStatus({ type: 'success', message: 'Message sent successfully' })
+      setContactData({
+        name: '',
+        phone: '',
+        message: '',
+      })
+    }
+
   } catch (err) {
-    setFormStatus({ type: 'error', message: err.message });
+    if (formType === 'registration') {
+      setRegistrationStatus({ type: 'error', message: err.message })
+    }
+    if (formType === 'tutor') {
+      setTutorStatus({ type: 'error', message: err.message })
+    }
+    if (formType === 'contact') {
+      setContactStatus({ type: 'error', message: err.message })
+    }
   } finally {
-    setIsSubmitting(false);
+    setIsSubmitting(false)
   }
-};
+}
+
 
 
   const pastPapers = [
@@ -386,26 +488,32 @@ const handleFormSubmit = async (formType) => {
       <nav className="bg-[#0F4C5C]/90 backdrop-blur-sm border-b border-[#F5B041]/20 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-3 hover:opacity-90 transition">
-  <div className="w-12 h-12 rounded-lg overflow-hidden bg-white">
+           <button
+  onClick={() => {
+    setCurrentPage('home')
+    setMobileMenuOpen(false)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }}
+  className="flex items-center space-x-3 hover:opacity-90 transition"
+>
+  <div className="w-12 h-12 rounded-full overflow-hidden bg-white">
     <Image
       src="/images/logo.jpg"
-       alt="TheCurveF logo"
-
+      alt="TheCurveF logo"
       width={48}
       height={48}
-      className="object-contain"
+      className="object-cover"
       priority
     />
   </div>
 
-  <div>
+  <div className="text-left">
     <h1 className="text-white font-bold text-xl">TheCurveF</h1>
     <p className="text-[#F5B041] text-xs">
       Education Brought To You In Style
     </p>
   </div>
-</Link>
+</button>
 
 
 
@@ -444,11 +552,19 @@ const handleFormSubmit = async (formType) => {
   </Select>
 
   <button
-    onClick={() => setShowRegistration(true)}
-    className="ml-4 px-4 py-2 rounded-lg bg-[#F5B041] text-[#0F4C5C] font-semibold hover:bg-[#FFD166] transition"
-  >
-    Student Registration
-  </button>
+  onClick={() => {
+    setShowRegistration(true)
+    setShowTutor(false)
+
+    // 🔥 RESET SUCCESS MESSAGES
+    setRegistrationStatus({ type: '', message: '' })
+    setTutorStatus({ type: '', message: '' })
+  }}
+  className="ml-4 px-4 py-2 rounded-lg bg-[#F5B041] text-[#0F4C5C] font-semibold hover:bg-[#FFD166] transition"
+>
+  Student Registration
+</button>
+
 </div>
 
 {/* Mobile Menu Button */}
@@ -530,14 +646,16 @@ const handleFormSubmit = async (formType) => {
                   Free Past Papers
                 </Button>
 
-                <Button
-                  size="lg"
-                  onClick={() => setCurrentPage('book-tutor')}
-                  className="bg-[#F5B041] hover:bg-[#F5B041]/90 text-[#0F4C5C] font-semibold px-6 py-5 rounded-xl shadow-xl"
-                >
-                  <Users className="w-5 h-5 mr-2" />
-                  Book a Tutor
-                </Button>
+                {/* ✅ HERO: Book a Tutor button — FIXED */}
+<Button
+  onClick={() => setCurrentPage('tutor')} // ← navigation restored
+  className="bg-[#F5B041] hover:bg-[#F5B041]/90 text-[#0F4C5C] px-6 py-3 rounded-xl flex items-center gap-2 font-semibold"
+>
+  <Users className="w-5 h-5" />
+  Book a Tutor
+</Button>
+
+
 
                 <button
                   onClick={() => setCurrentPage('registration')}
@@ -940,7 +1058,8 @@ const handleFormSubmit = async (formType) => {
        
 
         {/* Book Tutor Form */}
-        {currentPage === 'book-tutor' && (
+        {currentPage === 'tutor' && (
+
           <div className="max-w-2xl mx-auto space-y-8">
             <div className="text-center mb-12">
               <Users className="w-20 h-20 text-[#F5B041] mx-auto mb-4" />
@@ -961,8 +1080,9 @@ const handleFormSubmit = async (formType) => {
                   <Input
                     id="tutor-name"
                     placeholder="Enter your full name"
-                    value={formData.name || ''}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    value={tutorData.name}
+                    onChange={(e) =>
+                     setTutorData({ ...tutorData, name: e.target.value })}
                     className="mt-1"
                     required
                   />
@@ -976,8 +1096,9 @@ const handleFormSubmit = async (formType) => {
                     id="tutor-phone"
                     type="tel"
                     placeholder="Enter your phone number"
-                    value={formData.phone || ''}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    value={tutorData.phone}
+                    onChange={(e) =>
+                     setTutorData({ ...tutorData, phone: e.target.value })}
                     className="mt-1"
                     required
                   />
@@ -988,9 +1109,12 @@ const handleFormSubmit = async (formType) => {
                     Grade *
                   </Label>
                   <Select
-                    value={formData.grade || ''}
-                    onValueChange={(value) => setFormData({ ...formData, grade: value })}
-                  >
+  value={tutorData.grade}
+  onValueChange={(value) =>
+    setTutorData({ ...tutorData, grade: value })
+  }
+>
+
                     <SelectTrigger className="mt-1">
                       <SelectValue placeholder="Select grade" />
                     </SelectTrigger>
@@ -1009,8 +1133,9 @@ const handleFormSubmit = async (formType) => {
                   <Textarea
                     id="tutor-subjects"
                     placeholder="e.g., Mathematics, Physical Sciences, Life Sciences"
-                    value={formData.subjects || ''}
-                    onChange={(e) => setFormData({ ...formData, subjects: e.target.value })}
+                    value={tutorData.subjects}
+  onChange={(e) =>
+    setTutorData({ ...tutorData, subjects: e.target.value })}
                     className="mt-1"
                     rows={3}
                     required
@@ -1022,9 +1147,12 @@ const handleFormSubmit = async (formType) => {
                     Days Per Week *
                   </Label>
                   <Select
-                    value={formData.daysPerWeek || ''}
-                    onValueChange={(value) => setFormData({ ...formData, daysPerWeek: value })}
-                  >
+  value={tutorData.daysPerWeek}
+  onValueChange={(value) =>
+    setTutorData({ ...tutorData, daysPerWeek: value })
+  }
+>
+
                     <SelectTrigger className="mt-1">
                       <SelectValue placeholder="Select days per week" />
                     </SelectTrigger>
@@ -1036,32 +1164,28 @@ const handleFormSubmit = async (formType) => {
                   </Select>
                 </div>
 
-                {formStatus.message && (
-                  <div
-                    className={`p-4 rounded-lg flex items-start space-x-3 ${
-                      formStatus.type === 'success'
-                        ? 'bg-green-50 border border-green-200'
-                        : 'bg-red-50 border border-red-200'
-                    }`}
-                  >
-                    {formStatus.type === 'success' ? (
-                      <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
-                    ) : (
-                      <AlertCircle className="w-5 h-5 text-red-600 mt-0.5" />
-                    )}
-                    <p
-                      className={`text-sm ${
-                        formStatus.type === 'success' ? 'text-green-800' : 'text-red-800'
-                      }`}
-                    >
-                      {formStatus.message}
-                    </p>
-                  </div>
-                )}
+                {/* Tutor status message */}
+{tutorStatus.message && (
+  <div className={tutorStatus.type === 'success'
+    ? 'bg-green-50 border border-green-200'
+    : 'bg-red-50 border border-red-200'}
+  >
+    {tutorStatus.message}
+  </div>
+)}
+
+
 
                 <Button
                   onClick={() => handleFormSubmit('tutor')}
-                  disabled={isSubmitting || !formData.name || !formData.phone || !formData.grade || !formData.subjects || !formData.daysPerWeek}
+                  disabled={
+                   isSubmitting ||
+                   !tutorData.name ||
+                   !tutorData.phone ||
+                   !tutorData.grade ||
+                   !tutorData.subjects ||
+                   !tutorData.daysPerWeek
+                   }
                   className="w-full bg-[#FF6B35] hover:bg-[#FF6B35]/90 text-white py-6 text-lg font-semibold rounded-xl disabled:opacity-50"
                 >
                   {isSubmitting ? 'Submitting...' : 'Request Tutor Booking'}
@@ -1109,72 +1233,81 @@ const handleFormSubmit = async (formType) => {
                   <Label htmlFor="contact-name" className="text-gray-700 font-medium">
                     Full Name *
                   </Label>
+                  
                   <Input
-                    id="contact-name"
-                    placeholder="Enter your full name"
-                    value={formData.name || ''}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="mt-1"
-                    required
+                   value={contactData.name}
+                   onChange={(e) =>
+                     setContactData({ ...contactData, name: e.target.value })
+                   }
                   />
+
                 </div>
 
                 <div>
                   <Label htmlFor="contact-phone" className="text-gray-700 font-medium">
                     Phone Number *
                   </Label>
+                  
                   <Input
-                    id="contact-phone"
-                    type="tel"
-                    placeholder="Enter your phone number"
-                    value={formData.phone || ''}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="mt-1"
-                    required
+                   value={contactData.phone}
+                   onChange={(e) =>
+                     setContactData({ ...contactData, phone: e.target.value })
+                   }
                   />
+
                 </div>
 
                 <div>
                   <Label htmlFor="contact-message" className="text-gray-700 font-medium">
                     Message *
                   </Label>
+                 
                   <Textarea
                     id="contact-message"
                     placeholder="Tell us how we can help you..."
-                    value={formData.message || ''}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    value={contactData.message}
+                    onChange={(e) =>
+                      setContactData({ ...contactData, message: e.target.value })
+                    }
                     className="mt-1"
                     rows={5}
                     required
                   />
+
+
                 </div>
 
-                {formStatus.message && (
-                  <div
-                    className={`p-4 rounded-lg flex items-start space-x-3 ${
-                      formStatus.type === 'success'
-                        ? 'bg-green-50 border border-green-200'
-                        : 'bg-red-50 border border-red-200'
-                    }`}
-                  >
-                    {formStatus.type === 'success' ? (
-                      <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
-                    ) : (
-                      <AlertCircle className="w-5 h-5 text-red-600 mt-0.5" />
-                    )}
-                    <p
-                      className={`text-sm ${
-                        formStatus.type === 'success' ? 'text-green-800' : 'text-red-800'
-                      }`}
-                    >
-                      {formStatus.message}
-                    </p>
-                  </div>
-                )}
+   {/* Tutor status message */}
+{tutorStatus.message && (
+  <div className={tutorStatus.type === 'success'
+    ? 'bg-green-50 border border-green-200'
+    : 'bg-red-50 border border-red-200'}
+  >
+    {tutorStatus.message}
+  </div>
+)}
+
+{/* Contact form status message */}
+{contactStatus.message && (
+  <div className={contactStatus.type === 'success'
+    ? 'bg-green-50 border border-green-200'
+    : 'bg-red-50 border border-red-200'}
+  >
+    {contactStatus.message}
+  </div>
+)}
+
+
 
                 <Button
-                  onClick={() => handleFormSubmit('contact')}
-                  disabled={isSubmitting || !formData.name || !formData.phone || !formData.message}
+                onClick={() => handleFormSubmit('contact')}
+                disabled={
+                  isSubmitting ||
+                  !contactData.name ||
+                  !contactData.phone ||
+                  !contactData.message
+                }
+
                   className="w-full bg-[#FF6B35] hover:bg-[#FF6B35]/90 text-white py-6 text-lg font-semibold rounded-xl disabled:opacity-50"
                 >
                   {isSubmitting ? 'Sending...' : 'Send Message'}
@@ -1201,6 +1334,8 @@ const handleFormSubmit = async (formType) => {
           </div>
           
         )}
+
+        
 
 {/* Student Registration Form */}
 {currentPage === 'registration' && (
@@ -1438,17 +1573,19 @@ const handleFormSubmit = async (formType) => {
       {registrationSuccess ? 'Successfully submitted ✅' : 'Submit Registration'}
     </Button>
 
-    {formStatus.message && (
-      <p
-        className={`text-sm ${
-          formStatus.type === 'success'
-            ? 'text-green-600'
-            : 'text-red-600'
-        }`}
-      >
-        {formStatus.message}
-      </p>
-    )}
+   {/* ✅ Registration status message */}
+{registrationStatus.message && (
+  <p
+    className={`text-sm ${
+      registrationStatus.type === 'success'
+        ? 'text-green-600'
+        : 'text-red-600'
+    }`}
+  >
+    {registrationStatus.message}
+  </p>
+)}
+
   </CardContent>
 </form>
 
